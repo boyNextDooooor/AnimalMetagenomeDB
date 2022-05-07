@@ -1,0 +1,577 @@
+*{
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    list-style: none;
+    font-family: "微软雅黑";
+}
+body{
+    font-size: 16px;
+    color: rgba(0,0,0,1);
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.ant-table-tbody>tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td, .ant-table-tbody>tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td, .ant-table-thead>tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td, .ant-table-thead>tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td{
+    background-color: white
+}
+@font-face {
+    font-family: 'iconfont';  /* Project id 2748743 */
+    src: url('//at.alicdn.com/t/font_2748743_xr2iqdbz9l8.woff2?t=1629114255094') format('woff2'),
+    url('//at.alicdn.com/t/font_2748743_xr2iqdbz9l8.woff?t=1629114255094') format('woff'),
+    url('//at.alicdn.com/t/font_2748743_xr2iqdbz9l8.ttf?t=1629114255094') format('truetype');
+}
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+.ant-table th,td {
+    white-space: nowrap;
+}
+/*.ant-table td.div{*/
+/*    white-space: normal;*/
+/*}*/
+.spin-content {
+    border: 1px solid #91d5ff;
+    background-color: #e6f7ff;
+    padding: 30px;
+}
+.dark-row{
+    background-color: #f9f9f9;
+}
+
+a:hover{
+    background-color:rgb(76,150,223);
+}
+a:active{
+    background-color:cyan;
+}
+.active{
+    background-color: #3aa2e2;
+}
+.fy{
+    float: right;
+    margin-right: 5%;
+    margin-top: 20px;
+}
+
+
+    .topBox{
+        background-color: #3b8fc3;
+        height: 75px;
+        width: 100%;
+        /*right: 0;*/
+        /*left: 0;*/
+        /*position: fixed;*/
+        /*z-index: 100;*/
+    }
+    .logo{
+        height: 100%;
+        width: 45%;
+        float: left;
+    }
+    .logo-span{
+        white-space: nowrap;
+        font-size: 30px;
+        margin-left: 40%;
+        line-height: 75px;
+    }
+    .tb{
+        display: none;
+    }
+    .nav{
+        display: block;
+        height: 100%;
+        width: 55%;
+        float: left;
+    }
+    .nav ul{
+        height: 100%;
+        width: 100%;
+        line-height: 75px;
+    }
+    .nav li{
+        height: 100%;
+        float: left;
+        /*margin-right: 4%;*/
+        width: 9%;
+        text-align: center;
+    }
+    .nav li a{
+        color:#000000;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .container {
+        font-size: 14px;
+        margin-top: 1%;padding:0;
+        min-height: 750px;
+        width: 100%;
+    }
+    .foot{
+        width: 100%;
+        height: 75px;
+        margin-top: 80px;
+        background-color: #9e9e9e;
+    }
+    .foot p{
+        text-align: center;
+        position: relative;
+        top: 50%;
+    }
+    .all-content{
+        background-color:white;
+        width: 90%;
+        margin-left: 6%;
+        min-height: 25%;
+        margin-bottom: 20px;
+    }
+    .first-line-Select{
+        margin-bottom: 10px;
+    }
+    .second-line-Select{
+        height: 33%;
+        /*width: 80%;*/
+        /*float: right;*/
+
+    }
+
+    .Select-one{
+        display: inline-block;
+        margin-right: -10px;
+        /*width: 30%;*/
+    }
+    .Select-two{
+        display: inline-block;
+        margin-right: -10px;
+        /*width: 30%;*/
+    }
+    .Select-three{
+        display: inline-block;
+        /*margin-right: 10px;*/
+        /*width: 30%;*/
+    }
+
+    .Select-four{
+        display: inline-block;
+        /*width: 39%;*/
+    }
+    .Select-five{
+        display: inline-block;
+        margin-right: 6.5px;
+        /*width: 30%;*/
+    }
+    .Select-six{
+        display: inline-block;
+        margin-right: 6.5px;
+        /*width: 30%;*/
+    }
+    .Select-seven{
+        display: inline-block;
+        /*width: 30%;*/
+    }
+    .Select-eight{
+        display: inline-block;
+        margin-right: 10px;
+        /*width: 30%;*/
+    }
+    .Select-nine{
+        display: inline-block;
+        margin-right: 10px;
+        /*width: 30%;*/
+    }
+    .Select-ten{
+        display: inline-block;
+        margin-right: 10px;
+        /*width: 30%;*/
+    }
+    /*.all-button{*/
+    /*    display: inline-block;*/
+    /*    width: 28%;*/
+    /*    position: relative;*/
+    /*    margin-left: 83%;*/
+    /*}*/
+    .button-one{
+        display: inline-block;
+    }
+    .button-two{
+        display: inline-block;
+    }
+    .button-three{
+        display: inline-block;
+    }
+    .ant-select, .ant-select ol, .ant-select ul {
+        width: 180px;
+    }
+    .ant-cascader-picker{
+        width: 244px;
+    }
+
+
+@media only screen and (max-width:1440px ){
+    .logo-span{
+        margin-left: 150px;
+    }
+    .logo{
+        width: 50%;
+    }
+    .nav{
+        width: 50%;
+    }
+    .nav li{
+        width: 12%;
+    }
+}
+
+@media only screen and (max-width:1024px ){
+    .logo-span{
+        margin-left: 85px;
+    }
+    .logo{
+        width: 50%;
+    }
+    .nav{
+        width: 50%;
+        display: block;
+    }
+    .nav li{
+        width: 14%;
+    }
+    .container {
+        min-height: 900px;
+    }
+    .first-line-Select{
+        height: 36%;
+    }
+    .second-line-Select {
+        margin-bottom: 10px;
+    }
+    /*.all-button{*/
+    /*    margin-left: 73%;*/
+    /*}*/
+    .all-content{
+        width: 100%;
+        height: 16%;
+        margin-left: 15px;
+    }
+}
+@media only screen and (max-width:768px ){
+
+    .logo-span {
+        margin-left: 20px;
+        font-size: 25px;
+    }
+    .nav li {
+        width: 16%;
+    }
+    .container{
+        min-height: 900px;
+    }
+    .all-content{
+        background-color:white;
+        width: 80%;
+        height: 200px;
+        text-align: right;
+        /*width: 80%;height: 50%;*/
+        /*margin-left: auto;*/
+        /*margin-right: auto;*/
+    }
+    .first-line-Select{
+        height: 80%;
+        width: 55%;
+        margin-left: 0px;
+        float: left;
+    }
+    .second-line-Select{
+        height: 80%;
+        width: 45%;
+        margin-left: 0px;
+        float: left;
+    }
+    .Select-one{
+        margin-top: 5%;
+        width: 133%;
+        position: relative;
+        float: right;
+    }
+    .Select-two{
+        margin-top: 5%;
+        width: 120%;
+        position: relative;
+        float: right;
+    }
+    .Select-three{
+        margin-top: 5%;
+        width: 123%;
+        position: relative;
+        float: right;
+    }
+
+    .Select-four{
+        margin-top: 5%;
+        width: 100%;
+    }
+    .Select-five{
+        margin-top: 5%;
+        width: 120%;
+    }
+    .Select-six{
+        margin-top: 5%;
+        width: 120%;
+    }
+    .all-button{
+        /*margin-top: 0px;*/
+        /*height: 100px;*/
+        /*width: 100%;*/
+        /*margin-top: -4px;*/
+        /*margin-left: 62px;*/
+        /*display: inline-block;*/
+        margin-top: 26px;
+    }
+    .button-one{
+        display: inline-block;
+        right: 30%;
+    }
+    .button-two{
+        display: inline-block;
+    }
+    .button-three{
+        display: inline-block;
+    }
+    .ant-select, .ant-select ol, .ant-select ul {
+        width: 150px;
+    }
+    .ant-cascader-picker{
+        width: 150px;
+    }
+    .fy{
+        margin-right: 40px;
+    }
+}
+
+@media only screen and (max-width:425px ){
+    .topBox{
+        background-color: #3b8fc3;
+        height: 75px;
+        width: 100%;
+        position: fixed;
+        z-index: 100;
+        top: 0;
+    }
+    .logo{
+        height: 100%;
+        width: 65%;
+        float: left;
+    }
+    .logo-span{
+        white-space: nowrap;
+        font-size: 20px;
+        margin-left: 12px;
+        line-height: 75px;
+    }
+    .butTb{
+        height: 100%;
+        width: 35%;
+        float: left;
+    }
+    .tb{
+        display: block;
+        width: 35px;
+        margin-left: 90px;
+        margin-top: 20px;
+    }
+    .nav{
+        display: none;
+        height: 22%;
+        width: 100%;
+        float: none;
+        position: fixed;
+        top: 75px;
+        background-color: beige;
+    }
+    .nav ul{
+        height: 100%;
+        width: 100%;
+        line-height: 25px;
+    }
+    .nav li{
+        height: 16.66%;
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+    .nav li a{
+        color:#000000;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .foot{
+        width: 100%;
+        margin-top: 54px;
+        background-color: #9e9e9e;
+    }
+    .foot p{
+        text-align: center;
+        position: relative;
+        top: 40%;
+        font-size: 13px;
+    }
+    .container{
+        min-height: 1000px;
+        margin-top: 60px;
+    }
+    .all-content{
+        background-color:white;
+        width: 80%;
+        height: 360px;
+        text-align: right;
+        /*width: 80%;height: 50%;*/
+        /*margin-left: auto;*/
+        /*margin-right: auto;*/
+    }
+    .first-line-Select{
+        height: 40%;
+        width: 100%;
+        margin-top: 5%;
+    }
+    .second-line-Select{
+        height: 40%;
+        width: 100%;
+        margin-left: -66px;
+    }
+
+    .Select-one{
+        margin-top: 5%;
+        width: 133%;
+        position: relative;
+        float: right;
+    }
+    .Select-two{
+        margin-top: 5%;
+        width: 120%;
+        position: relative;
+        float: right;
+    }
+    .Select-three{
+        margin-top: 5%;
+        width: 123%;
+        position: relative;
+        float: right;
+    }
+
+    .Select-four{
+        margin-top: 5%;
+        width: 100%;
+    }
+    .Select-five{
+        margin-top: 5%;
+        width: 120%;
+    }
+    .Select-six{
+        margin-top: 5%;
+        width: 120%;
+    }
+    /*.all-button{*/
+    /*    margin-top: 5%;*/
+    /*    height: 100px;*/
+    /*    width: 100%;*/
+    /*    margin-left: 4px;*/
+    /*    !*display: inline-block;*!*/
+    /*}*/
+    .button-one{
+        display: inline-block;
+        right: 30%;
+    }
+    .button-two{
+        display: inline-block;
+    }
+    .button-three{
+        display: inline-block;
+    }
+    .ant-select, .ant-select ol, .ant-select ul {
+        width: 150px;
+    }
+    .ant-cascader-picker{
+        width: 150px;
+    }
+    .fy{
+        margin-right: 20px;
+    }
+}
+
+
+
+/*@media only screen and (max-width:1263px ){*/
+/*    .all-content{*/
+/*        background-color:white;*/
+/*        width: 100%;height: 10%;*/
+/*        margin-left: auto;*/
+/*        margin-right: auto;*/
+/*    }*/
+/*    .first-line-Select{*/
+/*        height: 50%;*/
+/*        margin-top: 1%;*/
+/*        width: 100%;*/
+/*        padding-left: 8%;*/
+/*    }*/
+/*    .Select-one{*/
+/*        display: inline;*/
+/*        width: 60%;*/
+/*    }*/
+/*    .Select-two{*/
+/*        display: inline;*/
+/*        width: 60%;*/
+/*    }*/
+/*    .Select-three{*/
+/*        display: inline;*/
+/*        width: 60%;*/
+/*    }*/
+/*    .second-line-Select{*/
+/*        height: 50%;*/
+/*        width: 100%;*/
+/*    }*/
+/*    .Select-four{*/
+/*        display: inline;*/
+/*    }*/
+/*    .Select-five{*/
+/*        display: inline;*/
+/*    }*/
+/*    .Select-six{*/
+/*        display: inline;*/
+/*    }*/
+/*    .button-one{*/
+/*        display: inline-block;*/
+/*    }*/
+/*    .button-two{*/
+/*        display: inline-block;*/
+/*    }*/
+/*    .button-three{*/
+/*        display: inline-block;*/
+/*    }*/
+/*    .all-button{*/
+/*        display: inline-block;*/
+/*        width: 30%;*/
+/*        position: relative;*/
+/*        margin-left: 83%;*/
+/*    }*/
+/*}*/
+
+@media only screen and (max-width:375px ){
+    .first-line-Select {
+        margin-left: -20px;
+    }
+    .second-line-Select {
+        margin-left: -88px;
+    }
+    .all-content{
+        width: 92%;
+    }
+}

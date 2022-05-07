@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.srt.mapper.GmkszMapper">
+  <resultMap id="BaseResultMap" type="com.srt.pojo.Gmksz">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="gmksz" jdbcType="VARCHAR" property="gmksz" />
+    <result column="gmksz" jdbcType="VARCHAR" property="label" />
+    <result column="gmksz" jdbcType="VARCHAR" property="title" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, gmksz, parent_id
+  </sql>
+  <select id="selectByExample" parameterType="com.srt.pojo.GmkszExample" resultMap="BaseResultMap">
+<!--    select-->
+<!--    <if test="distinct">-->
+<!--      distinct-->
+<!--    </if>-->
+<!--    <include refid="Base_Column_List" />-->
+<!--    from gmksz-->
+<!--    <if test="_parameter != null">-->
+<!--      <include refid="Example_Where_Clause" />-->
+<!--    </if>-->
+<!--    <if test="orderByClause != null">-->
+<!--      order by ${orderByClause}-->
+<!--    </if>-->
+        select
+        id,parent_id,gmksz
+        from gmksz
+        GROUP BY gmksz
+        ORDER BY gmksz
+
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from gmksz
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from gmksz
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.srt.pojo.GmkszExample">
+    delete from gmksz
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.srt.pojo.Gmksz">
+    insert into gmksz (id, gmksz, parent_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{gmksz,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.srt.pojo.Gmksz">
+    insert into gmksz
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gmksz != null">
+        gmksz,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="gmksz != null">
+        #{gmksz,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.srt.pojo.GmkszExample" resultType="java.lang.Long">
+    select count(*) from gmksz
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update gmksz
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.gmksz != null">
+        gmksz = #{record.gmksz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update gmksz
+    set id = #{record.id,jdbcType=INTEGER},
+      gmksz = #{record.gmksz,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.srt.pojo.Gmksz">
+    update gmksz
+    <set>
+      <if test="gmksz != null">
+        gmksz = #{gmksz,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.srt.pojo.Gmksz">
+    update gmksz
+    set gmksz = #{gmksz,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByParentId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM gmksz
+    WHERE parent_id = #{parentId,jdbcType=INTEGER}
+    ORDER BY gmksz
+  </select>
+
+  <select id="selectType1" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT COUNT(DISTINCT GENUS) FROM animals WHERE GENUS = #{type,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectType2" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT COUNT(DISTINCT FAMILY) FROM animals WHERE FAMILY = #{type,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectType3" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT COUNT(DISTINCT ORDERS) FROM animals WHERE ORDERS = #{type,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectType4" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT COUNT(DISTINCT OUTLINE) FROM animals WHERE OUTLINE = #{type,jdbcType=VARCHAR}
+  </select>
+</mapper>

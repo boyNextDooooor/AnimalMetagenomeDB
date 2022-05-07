@@ -1,0 +1,1427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.srt.mapper.AnimalsMapper">
+  <resultMap id="BaseResultMap" type="com.srt.pojo.Animals">
+    <id column="Experiment_Accession" jdbcType="VARCHAR" property="experimentAccession" />
+    <result column="Experiment_Title" jdbcType="VARCHAR" property="experimentTitle" />
+    <result column="Organism_Name" jdbcType="VARCHAR" property="organismName" />
+    <result column="Instrument" jdbcType="VARCHAR" property="instrument" />
+    <result column="Submitter" jdbcType="VARCHAR" property="submitter" />
+    <result column="Study_Accession" jdbcType="VARCHAR" property="studyAccession" />
+    <result column="Study_Title" jdbcType="VARCHAR" property="studyTitle" />
+    <result column="Sample_Accession" jdbcType="VARCHAR" property="sampleAccession" />
+    <result column="Sample_Title" jdbcType="VARCHAR" property="sampleTitle" />
+    <result column="Total_Size" jdbcType="VARCHAR" property="totalSize" />
+    <result column="Total_RUNs" jdbcType="VARCHAR" property="totalRuns" />
+    <result column="Total_Spots" jdbcType="VARCHAR" property="totalSpots" />
+    <result column="Total_Bases" jdbcType="VARCHAR" property="totalBases" />
+    <result column="Sample_Name" jdbcType="VARCHAR" property="sampleName" />
+    <result column="Library_Strategy" jdbcType="VARCHAR" property="libraryStrategy" />
+    <result column="Library_Source" jdbcType="VARCHAR" property="librarySource" />
+    <result column="Library_Selection" jdbcType="VARCHAR" property="librarySelection" />
+    <result column="Bioproject_Accession" jdbcType="VARCHAR" property="bioprojectAccession" />
+    <result column="BioSample_Accession" jdbcType="VARCHAR" property="biosampleAccession" />
+    <result column="Sample_site" jdbcType="VARCHAR" property="sampleSite" />
+    <result column="Sex" jdbcType="VARCHAR" property="sex" />
+    <result column="Age" jdbcType="VARCHAR" property="age" />
+    <result column="Creation_date" jdbcType="VARCHAR" property="creationDate" />
+    <result column="Collection_date" jdbcType="VARCHAR" property="collectionDate" />
+    <result column="Geographic_location" jdbcType="VARCHAR" property="geographicLocation" />
+    <result column="Latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="Longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="PubMed_ID" jdbcType="VARCHAR" property="pubmedId" />
+    <result column="Conditions" jdbcType="VARCHAR" property="conditions" />
+    <result column="Pheotype" jdbcType="VARCHAR" property="pheotype" />
+    <result column="Breed" jdbcType="VARCHAR" property="breed" />
+    <result column="Source_database" jdbcType="VARCHAR" property="sourceDatabase" />
+    <result column="Bioproject_description" jdbcType="VARCHAR" property="bioprojectDescription" />
+    <result column="Sample_number" jdbcType="VARCHAR" property="sampleNumber" />
+    <result column="LianjieB" jdbcType="VARCHAR" property="lianjieb" />
+    <result column="Outline" jdbcType="VARCHAR" property="outline" />
+    <result column="Orders" jdbcType="VARCHAR" property="orders" />
+    <result column="Family" jdbcType="VARCHAR" property="family" />
+    <result column="Genus" jdbcType="VARCHAR" property="genus" />
+    <result column="Species" jdbcType="VARCHAR" property="species" />
+    <result column="LianjieP" jdbcType="VARCHAR" property="lianjiep" />
+    <result column="LianjieS" jdbcType="VARCHAR" property="lianjies" />
+    <result column="LianjieE" jdbcType="VARCHAR" property="lianjiee" />
+    <result column="Bioproject_type" jdbcType="VARCHAR" property="bioprojectType" />
+    <result column="Sample_type" jdbcType="VARCHAR" property="sampleType" />
+
+    <result column="Study_type" jdbcType="VARCHAR" property="studyType" />
+    <result column="DNA_extraction_method" jdbcType="VARCHAR" property="DNAExtractionMethod" />
+    <result column="LianjieNew" jdbcType="VARCHAR" property="lianjienew" />
+    <result column="extra1" jdbcType="VARCHAR" property="extra1" />
+    <result column="extra2" jdbcType="VARCHAR" property="extra2" />
+<!--    <result column="First_clo" jdbcType="VARCHAR" property="firstClo" />-->
+<!--    <result column="Second_clo" jdbcType="VARCHAR" property="secondClo" />-->
+  </resultMap>
+
+  <resultMap id="BaseResultMapP" type="com.srt.pojo.Animals">
+    <result column="Bioproject_Accession" jdbcType="VARCHAR" property="bioprojectAccession" />
+    <result column="Study_Title" jdbcType="VARCHAR" property="studyTitle" />
+    <result column="Sample_number" jdbcType="VARCHAR" property="sampleNumber" />
+    <result column="Library_Strategy" jdbcType="VARCHAR" property="libraryStrategy" />
+    <result column="Bioproject_description" jdbcType="VARCHAR" property="bioprojectDescription" />
+    <result column="Bioproject_type" jdbcType="VARCHAR" property="bioprojectType" />
+  </resultMap>
+
+  <resultMap id="SampleSiteMap" type="com.srt.pojo.SampleSiteTmp">
+    <result column="Sample_site0" jdbcType="VARCHAR" property="sampleSite0" />
+    <result column="Sample_site1" jdbcType="VARCHAR" property="sampleSite1" />
+  </resultMap>
+
+  <resultMap id="StudyTypeMap" type="com.srt.pojo.StudyTypeTmp">
+    <result column="level1" jdbcType="VARCHAR" property="level1" />
+    <result column="level2" jdbcType="VARCHAR" property="level2" />
+    <result column="level3" jdbcType="VARCHAR" property="level3" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Experiment_Accession, Experiment_Title, Organism_Name, Instrument, Submitter, Study_Accession,
+    Study_Title, Sample_Accession, Sample_Title, Total_Size, Total_RUNs, Total_Spots,
+    Total_Bases, Sample_Name, Library_Strategy, Library_Source, Library_Selection, Bioproject_Accession,
+    BioSample_Accession, Sample_site, Sex, Age, Creation_date, Collection_date,
+    Geographic_location, Latitude, Longitude, PubMed_ID, Conditions, Pheotype, Breed,
+    Source_database, Bioproject_description, Sample_number, LianjieB, Outline, Orders,
+    Family, Genus, Species, LianjieP, LianjieS, LianjieE, Bioproject_type, Sample_type,
+    Study_type, DNA_extraction_method, LianjieNew, extra1, extra2
+  </sql>
+
+  <!--lhw-->
+  <select id="selectSpecies" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select Species
+    from animals  GROUP BY Species ORDER BY Species
+  </select>
+  <select id="getSampleSite1" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select Sample_site
+    from animals  GROUP BY Sample_site ORDER BY Sample_site
+  </select>
+  <select id="getSampleSite2" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select Sample_site2
+    from animals  GROUP BY Sample_site2 ORDER BY Sample_site2
+  </select>
+  <select id="getInstrument" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select Instrument
+    from animals GROUP BY Instrument ORDER BY Instrument
+  </select>
+  <select id="getLibraryStrategy" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select Library_Strategy
+    from animals  GROUP BY Library_Strategy ORDER BY Library_Strategy
+  </select>
+  <select id="selectWebById" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select
+      lianjie
+    from
+      animals
+    where  project_id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from animals
+    <where>
+      <if test="species != null and species != ''">
+        AND Species = #{species}
+      </if>
+      <if test="sampleSite1 != null and sampleSite1 != ''">
+        AND Sample_site = #{sampleSite1}
+      </if>
+      <if test="instrument != null and instrument != ''">
+        AND Instrument = #{instrument}
+      </if>
+      <if test="libraryStrategy != null and libraryStrategy != ''">
+        AND Library_Strategy = #{libraryStrategy}
+      </if>
+      <if test="newStudyType != null and newStudyType != ''">
+        AND Bioproject_type = #{newStudyType}
+      </if>
+      <if test="newDna != null and newDna != ''">
+        AND DNA_extraction_method = #{newDna}
+      </if>
+      <if test="newSex != null and newSex != ''">
+        AND Sex = #{newSex}
+      </if>
+      <if test="startDate != null and startDate != ''">
+        AND Creation_date &gt;= #{startDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+        AND Creation_date &lt;= #{endDate}
+      </if>
+      <if test="startMonth != null and startMonth != ''">
+        AND Age &gt;= #{startMonth}
+      </if>
+      <if test="endMonth != null and endMonth != ''">
+        AND Age &lt;= #{endMonth}
+      </if>
+    </where>
+  </select>
+  <select id="selectChangeInfo" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from animals
+    <where>
+      <if test="species != null and species != ''">
+        AND Species = #{species}
+      </if>
+      <if test="sampleSite1 != null and sampleSite1 != ''">
+        AND Sample_site = #{sampleSite1}
+      </if>
+      <if test="instrument != null and instrument != ''">
+        AND Instrument = #{instrument}
+      </if>
+      <if test="libraryStrategy != null and libraryStrategy != ''">
+        AND Library_Strategy = #{libraryStrategy}
+      </if>
+      <if test="newStudyType != null and newStudyType != ''">
+        AND Bioproject_type = #{newStudyType}
+      </if>
+      <if test="newDna != null and newDna != ''">
+        AND DNA_extraction_method = #{newDna}
+      </if>
+      <if test="newSex != null and newSex != ''">
+        AND Sex = #{newSex}
+      </if>
+      <if test="startDate != null and startDate != ''">
+        AND Creation_date &gt;= #{startDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+        AND Creation_date &lt;= #{endDate}
+      </if>
+      <if test="startMonth != null and startMonth != ''">
+        AND Age &gt;= #{startMonth}
+      </if>
+      <if test="endMonth != null and endMonth != ''">
+        AND Age &lt;= #{endMonth}
+      </if>
+    </where>
+  </select>
+  <select id="selectChangeInfo1" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from animals
+    <where>
+      <if test="species != null and species != ''">
+        AND Species = #{species}
+      </if>
+      <if test="sampleSite1 != null and sampleSite1 != ''">
+        AND Sample_site = #{sampleSite1}
+      </if>
+      <if test="instrument != null and instrument != ''">
+        AND Instrument = #{instrument}
+      </if>
+      <if test="libraryStrategy != null and libraryStrategy != ''">
+        AND Library_Strategy = #{libraryStrategy}
+      </if>
+      <if test="newStudyType != null and newStudyType != ''">
+        AND Bioproject_type = #{newStudyType}
+      </if>
+      <if test="newDna != null and newDna != ''">
+        AND DNA_extraction_method = #{newDna}
+      </if>
+      <if test="newSex != null and newSex != ''">
+        AND Sex = #{newSex}
+      </if>
+      <if test="startDate != null and startDate != ''">
+        AND Creation_date &gt;= #{startDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+        AND Creation_date &lt;= #{endDate}
+      </if>
+      <if test="startMonth != null and startMonth != ''">
+        AND Age &gt;= #{startMonth}
+      </if>
+      <if test="endMonth != null and endMonth != ''">
+        AND Age &lt;= #{endMonth}
+      </if>
+      <if test="param != null and param != ''">
+        AND ${param} IS NOT NULL AND ${param} &lt;&gt; '' AND ${param} &lt;&gt; 'NA'
+      </if>
+    </where>
+    <if test="cause != null and cause != ''">
+      ORDER BY ${cause}
+    </if>
+  </select>
+  <select id="selectAllInfo" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from animals
+    <where>
+      <if test="species != null and species != ''">
+        AND Species = #{species}
+      </if>
+      <if test="sampleSite1 != null and sampleSite1 != ''">
+        AND Sample_site = #{sampleSite1}
+      </if>
+      <if test="instrument != null and instrument != ''">
+        AND Instrument = #{instrument}
+      </if>
+      <if test="libraryStrategy != null and libraryStrategy != ''">
+        AND Library_Strategy = #{libraryStrategy}
+      </if>
+      <if test="bioprojecttype != null and bioprojecttype != ''">
+        AND Bioproject_type like CONCAT('%', #{bioprojecttype}, '%')
+      </if>
+    </where>
+  </select>
+  <!--wkh-->
+  <select id="selectAll" resultType="com.srt.pojo.Animals" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from animals
+    <where>
+      <if test="species != null and species != ''">
+        AND Species = #{species}
+      </if>
+      <if test="genus != null and genus != ''">
+        AND Genus = #{genus}
+      </if>
+      <if test="bioprojecttype != null and bioprojecttype != ''">
+        AND Bioproject_type like CONCAT('%', #{bioprojecttype}, '%')
+      </if>
+      <if test="gang != null and gang != '' and gang != 'undefined'">
+        AND Outline = #{gang}
+      </if>
+      <if test="mu != null and mu != '' and mu != 'undefined'">
+        AND Orders = #{mu}
+      </if>
+      <if test="ke != null and ke != '' and ke != 'undefined'">
+        AND Family = #{ke}
+      </if>
+      <if test="shu != null and shu != '' and shu != 'undefined'">
+        AND Genus = #{shu}
+      </if>
+      <if test="zhong != null and zhong != '' and zhong != 'undefined'">
+        AND Species = #{zhong}
+      </if>
+    </where>
+    GROUP BY Bioproject_Accession
+    order by Bioproject_Accession
+  </select>
+  <select id="selectExample" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select Experiment_Accession,Bioproject_Accession,Study_Title,Bioproject_description,Bioproject_type,Sample_number,Library_Strategy,LianjieS,LianjieB
+    from animals GROUP BY Bioproject_Accession ORDER BY Bioproject_Accession
+  </select>
+  <select id="selectParts" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select Experiment_Accession,Bioproject_Accession,Study_Title,Bioproject_description,Bioproject_type,Sample_number,Library_Strategy,LianjieS,LianjieB
+    from animals  GROUP BY Bioproject_Accession ORDER BY Bioproject_Accession limit ${i},${pageSize}
+  </select>
+  <select id="selectByG" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select distinct Outline
+    from animals where Outline is not null order by Outline
+  </select>
+  <select id="selectByM" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select distinct Orders
+    from animals
+    where Outline = #{Outline} and Orders is not null order by Orders
+  </select>
+
+  <select id="selectBySpecies" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select Bioproject_Accession,Study_Title,Bioproject_description,Bioproject_type,Sample_number,Library_Strategy
+    from animals
+    where Species = #{Species}
+    GROUP BY Bioproject_Accession
+  </select>
+  <select id="selectByGenus" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select Bioproject_Accession,Study_Title,Bioproject_description,Bioproject_type,Sample_number,Library_Strategy
+    from animals
+    where Genus = #{Genus}
+    GROUP BY Bioproject_Accession
+    order by Bioproject_Accession
+  </select>
+  <select id="selectByGenusl" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select distinct trim(ifNull(Genus , 'Others')) as Genus from animals order by Genus
+  </select>
+  <select id="selectByBioprojectTypeOne" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select SUBSTRING_INDEX(Bioproject_type,'-',1) as First_clo from animals group by First_clo order by First_clo
+  </select>
+  <select id="selectByBioprojectTypeTwo" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select SUBSTRING_INDEX((SUBSTRING_INDEX(Bioproject_type,'-',2)),'-',-1)  as Second_clo from animals
+    where SUBSTRING_INDEX(Bioproject_type,'-',1) = #{FirstClo}
+    group by Second_clo order by Second_clo
+  </select>
+  <select id="selectByType" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select Bioproject_Accession,Study_Title,Bioproject_description,Bioproject_type,Sample_number,Library_Strategy
+    from animals
+    where SUBSTRING_INDEX(Bioproject_type,'-',1) = #{FirstClo}
+    GROUP BY Bioproject_Accession
+  </select>
+  <select id="getOutline" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select DISTINCT
+    Outline,Orders,Family,Genus,Species
+    from animals
+    where Outline is not null
+  </select>
+  <select id="selectOnChangeInfoOrder" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMapP">
+    select
+    <include refid="Base_Column_List" />
+    from animals
+    <where>
+      <if test="species == 'Wild animals'.toString()">
+        AND Species &lt;&gt; 'Bovine' AND Species &lt;&gt; 'Horse' AND Species &lt;&gt; 'Pig' AND Species &lt;&gt; 'Sheep'
+      </if>
+      <if test="species == 'Domestic animals'.toString()">
+        AND Species = 'Bovine' OR Species = 'Horse' OR Species = 'Pig' OR Species = 'Sheep'
+      </if>
+      <if test="species != null and species != '' and species != 'Wild animals'.toString() and species != 'Domestic animals'.toString()">
+        AND Species = #{species}
+      </if>
+      <if test="genus != null and genus != ''">
+        AND Genus = #{genus}
+      </if>
+      <if test="bioprojecttype != null and bioprojecttype != ''">
+        AND Bioproject_type like CONCAT('%', #{bioprojecttype}, '%')
+      </if>
+      <if test="gang != null and gang != '' and gang != 'undefined'">
+        AND Outline = #{gang}
+      </if>
+      <if test="mu != null and mu != '' and mu != 'undefined'">
+        AND Orders = #{mu}
+      </if>
+      <if test="ke != null and ke != '' and ke != 'undefined'">
+        AND Family = #{ke}
+      </if>
+      <if test="shu != null and shu != '' and shu != 'undefined'">
+        AND Genus = #{shu}
+      </if>
+      <if test="zhong != null and zhong != '' and zhong != 'undefined'">
+        AND Species = #{zhong}
+      </if>
+      <if test="sampleSite0 != null and sampleSite0 != '' and sampleSite0 != 'undefined'">
+        AND Study_type = #{sampleSite0}
+      </if>
+      <if test="sampleSite1 != null and sampleSite1 != '' and sampleSite1 != 'undefined'">
+        AND Sample_site = #{sampleSite1}
+      </if>
+      <if test="param != null and param != ''">
+        AND ${param} IS NOT NULL AND ${param} &lt;&gt; '' AND ${param} &lt;&gt; 'NA'
+      </if>
+    </where>
+    GROUP BY Sample_Accession
+    <if test="cause != null and cause != ''">
+      ORDER BY ${cause}
+    </if>
+  </select>
+
+  <select id="selectOnChangeInfo" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMapP">
+    select
+    <include refid="Base_Column_List" />
+    from animals
+    <where>
+      <if test="species == 'Wild animals'.toString()">
+        AND Species &lt;&gt; 'Bovine' AND Species &lt;&gt; 'Horse' AND Species &lt;&gt; 'Pig' AND Species &lt;&gt; 'Sheep'
+      </if>
+      <if test="species == 'Domestic animals'.toString()">
+        AND Species = 'Bovine' OR Species = 'Horse' OR Species = 'Pig' OR Species = 'Sheep'
+      </if>
+      <if test="species != null and species != '' and species != 'Wild animals'.toString() and species != 'Domestic animals'.toString()">
+        AND Species = #{species}
+      </if>
+      <if test="genus != null and genus != ''">
+        AND Genus = #{genus}
+      </if>
+      <if test="bioprojecttype != null and bioprojecttype != ''">
+        AND Bioproject_type like CONCAT('%', #{bioprojecttype}, '%')
+      </if>
+      <if test="gang != null and gang != '' and gang != 'undefined'">
+        AND Outline = #{gang}
+      </if>
+      <if test="mu != null and mu != '' and mu != 'undefined'">
+        AND Orders = #{mu}
+      </if>
+      <if test="ke != null and ke != '' and ke != 'undefined'">
+        AND Family = #{ke}
+      </if>
+      <if test="shu != null and shu != '' and shu != 'undefined'">
+        AND Genus = #{shu}
+      </if>
+      <if test="zhong != null and zhong != '' and zhong != 'undefined'">
+        AND Species = #{zhong}
+      </if>
+      <if test="sampleSite0 != null and sampleSite0 != '' and sampleSite0 != 'undefined'">
+        AND Study_type = #{sampleSite0}
+      </if>
+      <if test="sampleSite1 != null and sampleSite1 != '' and sampleSite1 != 'undefined'">
+        AND Sample_site = #{sampleSite1}
+      </if>
+    </where>
+    GROUP BY Sample_Accession
+    order by Sample_Accession
+  </select>
+
+  <select id="selectOptionsForSpecies" parameterType="com.srt.pojo.AnimalsExample" resultType="java.lang.String">
+    select distinct species
+    from animals
+    <where>
+      <if test="species == 'Wild animals'.toString()">
+        AND Species &lt;&gt; 'Bovine' AND Species &lt;&gt; 'Horse' AND Species &lt;&gt; 'Pig' AND Species &lt;&gt; 'Sheep'
+      </if>
+      <if test="species == 'Domestic animals'.toString()">
+        AND Species = 'Bovine' OR Species = 'Horse' OR Species = 'Pig' OR Species = 'Sheep'
+      </if>
+      <if test="species != null and species != '' and species != 'Wild animals'.toString() and species != 'Domestic animals'.toString()">
+        AND Species = #{species}
+      </if>
+      <if test="genus != null and genus != ''">
+        AND Genus = #{genus}
+      </if>
+      <if test="bioprojecttype != null and bioprojecttype != ''">
+        AND Bioproject_type like CONCAT('%', #{bioprojecttype}, '%')
+      </if>
+      <if test="gang != null and gang != '' and gang != 'undefined'">
+        AND Outline = #{gang}
+      </if>
+      <if test="mu != null and mu != '' and mu != 'undefined'">
+        AND Orders = #{mu}
+      </if>
+      <if test="ke != null and ke != '' and ke != 'undefined'">
+        AND Family = #{ke}
+      </if>
+      <if test="shu != null and shu != '' and shu != 'undefined'">
+        AND Genus = #{shu}
+      </if>
+      <if test="zhong != null and zhong != '' and zhong != 'undefined'">
+        AND Species = #{zhong}
+      </if>
+      <if test="sampleSite0 != null and sampleSite0 != '' and sampleSite0 != 'undefined'">
+        AND Study_type = #{sampleSite0}
+      </if>
+      <if test="sampleSite1 != null and sampleSite1 != '' and sampleSite1 != 'undefined'">
+        AND Sample_site = #{sampleSite1}
+      </if>
+    </where>
+    order by species
+  </select>
+
+  <select id="selectOptionsForSampleSite" parameterType="com.srt.pojo.AnimalsExample" resultMap="SampleSiteMap">
+    SELECT DISTINCT IFNULL(Study_type,'NA') AS Sample_site0,Sample_site AS Sample_site1
+    FROM animals
+    <where>
+      <if test="species == 'Wild animals'.toString()">
+        AND Species &lt;&gt; 'Bovine' AND Species &lt;&gt; 'Horse' AND Species &lt;&gt; 'Pig' AND Species &lt;&gt; 'Sheep'
+      </if>
+      <if test="species == 'Domestic animals'.toString()">
+        AND Species = 'Bovine' OR Species = 'Horse' OR Species = 'Pig' OR Species = 'Sheep'
+      </if>
+      <if test="species != null and species != '' and species != 'Wild animals'.toString() and species != 'Domestic animals'.toString()">
+        AND Species = #{species}
+      </if>
+      <if test="genus != null and genus != ''">
+        AND Genus = #{genus}
+      </if>
+      <if test="bioprojecttype != null and bioprojecttype != ''">
+        AND Bioproject_type like CONCAT('%', #{bioprojecttype}, '%')
+      </if>
+      <if test="gang != null and gang != '' and gang != 'undefined'">
+        AND Outline = #{gang}
+      </if>
+      <if test="mu != null and mu != '' and mu != 'undefined'">
+        AND Orders = #{mu}
+      </if>
+      <if test="ke != null and ke != '' and ke != 'undefined'">
+        AND Family = #{ke}
+      </if>
+      <if test="shu != null and shu != '' and shu != 'undefined'">
+        AND Genus = #{shu}
+      </if>
+      <if test="zhong != null and zhong != '' and zhong != 'undefined'">
+        AND Species = #{zhong}
+      </if>
+      <if test="sampleSite0 != null and sampleSite0 != '' and sampleSite0 != 'undefined'">
+        AND Study_type = #{sampleSite0}
+      </if>
+      <if test="sampleSite1 != null and sampleSite1 != '' and sampleSite1 != 'undefined'">
+        AND Sample_site = #{sampleSite1}
+      </if>
+    </where>
+    ORDER BY Sample_site0,Sample_site1
+  </select>
+
+  <select id="selectOptionsForStudyType" parameterType="com.srt.pojo.AnimalsExample" resultMap="StudyTypeMap">
+    SELECT DISTINCT
+    SUBSTRING_INDEX(Bioproject_type,'-',1) as level1,
+    SUBSTRING_INDEX(SUBSTRING_INDEX(Bioproject_type,'-',2),'-',-1) as level2,
+    SUBSTRING_INDEX(SUBSTRING_INDEX(Bioproject_type,'-',3),'-',-1) as level3
+    FROM animals
+    <where>
+      <if test="species == 'Wild animals'.toString()">
+        AND Species &lt;&gt; 'Bovine' AND Species &lt;&gt; 'Horse' AND Species &lt;&gt; 'Pig' AND Species &lt;&gt; 'Sheep'
+      </if>
+      <if test="species == 'Domestic animals'.toString()">
+        AND Species = 'Bovine' OR Species = 'Horse' OR Species = 'Pig' OR Species = 'Sheep'
+      </if>
+      <if test="species != null and species != '' and species != 'Wild animals'.toString() and species != 'Domestic animals'.toString()">
+        AND Species = #{species}
+      </if>
+      <if test="genus != null and genus != ''">
+        AND Genus = #{genus}
+      </if>
+      <if test="bioprojecttype != null and bioprojecttype != ''">
+        AND Bioproject_type like CONCAT('%', #{bioprojecttype}, '%')
+      </if>
+      <if test="gang != null and gang != '' and gang != 'undefined'">
+        AND Outline = #{gang}
+      </if>
+      <if test="mu != null and mu != '' and mu != 'undefined'">
+        AND Orders = #{mu}
+      </if>
+      <if test="ke != null and ke != '' and ke != 'undefined'">
+        AND Family = #{ke}
+      </if>
+      <if test="shu != null and shu != '' and shu != 'undefined'">
+        AND Genus = #{shu}
+      </if>
+      <if test="zhong != null and zhong != '' and zhong != 'undefined'">
+        AND Species = #{zhong}
+      </if>
+      <if test="sampleSite0 != null and sampleSite0 != '' and sampleSite0 != 'undefined'">
+        AND Study_type = #{sampleSite0}
+      </if>
+      <if test="sampleSite1 != null and sampleSite1 != '' and sampleSite1 != 'undefined'">
+        AND Sample_site = #{sampleSite1}
+      </if>
+    </where>
+    ORDER BY level1,level2,level3
+  </select>
+
+  <select id="selectOnChangeInfoParts" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMapP">
+    select
+    <include refid="Base_Column_List" />
+    from animals
+    <where>
+      <if test="species != null and species != ''">
+        AND Species = #{species}
+      </if>
+      <if test="genus != null and genus != ''">
+        AND Genus = #{genus}
+      </if>
+      <if test="bioprojecttype != null and bioprojecttype != ''">
+        AND Bioproject_type like CONCAT('%', #{bioprojecttype}, '%')
+      </if>
+      <if test="gang != null and gang != '' and gang != 'undefined'">
+        AND Outline = #{gang}
+      </if>
+      <if test="mu != null and mu != '' and mu != 'undefined'">
+        AND Orders = #{mu}
+      </if>
+      <if test="ke != null and ke != '' and ke != 'undefined'">
+        AND Family = #{ke}
+      </if>
+      <if test="shu != null and shu != '' and shu != 'undefined'">
+        AND Genus = #{shu}
+      </if>
+      <if test="zhong != null and zhong != '' and zhong != 'undefined'">
+        AND Species = #{zhong}
+      </if>
+    </where>
+    GROUP BY Bioproject_Accession
+    order by Bioproject_Accession
+    limit ${i},${pageSize}
+  </select>
+
+  <select id="selectByExample" parameterType="com.srt.pojo.AnimalsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from animals
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from animals
+    where Experiment_Accession = #{experimentAccession,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from animals
+    where Experiment_Accession = #{experimentAccession,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.srt.pojo.AnimalsExample">
+    delete from animals
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.srt.pojo.Animals">
+    insert into animals (Experiment_Accession, Experiment_Title,
+      Organism_Name, Instrument, Submitter,
+      Study_Accession, Study_Title, Sample_Accession,
+      Sample_Title, Total_Size, Total_RUNs,
+      Total_Spots, Total_Bases, Sample_Name,
+      Library_Strategy, Library_Source, Library_Selection,
+      Bioproject_Accession, BioSample_Accession,
+      Sample_site1, Sample_site2, Sex,
+      Age, Creation_date, Collection_date,
+      Geographic_location, Latitude, Longitude,
+      PubMed_ID, Conditions, Pheotype,
+      Breed, Source_database, Bioproject_description,
+      Sample_number, LianjieB, Outline,
+      Orders, Family, Genus,
+      Species, LianjieP, LianjieS,
+      LianjieE, Bioproject_type, Sample_type
+      )
+    values (#{experimentAccession,jdbcType=VARCHAR}, #{experimentTitle,jdbcType=VARCHAR},
+      #{organismName,jdbcType=VARCHAR}, #{instrument,jdbcType=VARCHAR}, #{submitter,jdbcType=VARCHAR},
+      #{studyAccession,jdbcType=VARCHAR}, #{studyTitle,jdbcType=VARCHAR}, #{sampleAccession,jdbcType=VARCHAR},
+      #{sampleTitle,jdbcType=VARCHAR}, #{totalSize,jdbcType=VARCHAR}, #{totalRuns,jdbcType=VARCHAR},
+      #{totalSpots,jdbcType=VARCHAR}, #{totalBases,jdbcType=VARCHAR}, #{sampleName,jdbcType=VARCHAR},
+      #{libraryStrategy,jdbcType=VARCHAR}, #{librarySource,jdbcType=VARCHAR}, #{librarySelection,jdbcType=VARCHAR},
+      #{bioprojectAccession,jdbcType=VARCHAR}, #{biosampleAccession,jdbcType=VARCHAR},
+      #{sampleSite1,jdbcType=VARCHAR}, #{sampleSite2,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+      #{age,jdbcType=VARCHAR}, #{creationDate,jdbcType=VARCHAR}, #{collectionDate,jdbcType=VARCHAR},
+      #{geographicLocation,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR},
+      #{pubmedId,jdbcType=VARCHAR}, #{conditions,jdbcType=VARCHAR}, #{pheotype,jdbcType=VARCHAR},
+      #{breed,jdbcType=VARCHAR}, #{sourceDatabase,jdbcType=VARCHAR}, #{bioprojectDescription,jdbcType=VARCHAR},
+      #{sampleNumber,jdbcType=VARCHAR}, #{lianjieb,jdbcType=VARCHAR}, #{outline,jdbcType=VARCHAR},
+      #{orders,jdbcType=VARCHAR}, #{family,jdbcType=VARCHAR}, #{genus,jdbcType=VARCHAR},
+      #{species,jdbcType=VARCHAR}, #{lianjiep,jdbcType=VARCHAR}, #{lianjies,jdbcType=VARCHAR},
+      #{lianjiee,jdbcType=VARCHAR}, #{bioprojectType,jdbcType=VARCHAR}, #{sampleType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.srt.pojo.Animals">
+    insert into animals
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="experimentAccession != null">
+        Experiment_Accession,
+      </if>
+      <if test="experimentTitle != null">
+        Experiment_Title,
+      </if>
+      <if test="organismName != null">
+        Organism_Name,
+      </if>
+      <if test="instrument != null">
+        Instrument,
+      </if>
+      <if test="submitter != null">
+        Submitter,
+      </if>
+      <if test="studyAccession != null">
+        Study_Accession,
+      </if>
+      <if test="studyTitle != null">
+        Study_Title,
+      </if>
+      <if test="sampleAccession != null">
+        Sample_Accession,
+      </if>
+      <if test="sampleTitle != null">
+        Sample_Title,
+      </if>
+      <if test="totalSize != null">
+        Total_Size,
+      </if>
+      <if test="totalRuns != null">
+        Total_RUNs,
+      </if>
+      <if test="totalSpots != null">
+        Total_Spots,
+      </if>
+      <if test="totalBases != null">
+        Total_Bases,
+      </if>
+      <if test="sampleName != null">
+        Sample_Name,
+      </if>
+      <if test="libraryStrategy != null">
+        Library_Strategy,
+      </if>
+      <if test="librarySource != null">
+        Library_Source,
+      </if>
+      <if test="librarySelection != null">
+        Library_Selection,
+      </if>
+      <if test="bioprojectAccession != null">
+        Bioproject_Accession,
+      </if>
+      <if test="biosampleAccession != null">
+        BioSample_Accession,
+      </if>
+      <if test="sampleSite1 != null">
+        Sample_site1,
+      </if>
+      <if test="sampleSite2 != null">
+        Sample_site2,
+      </if>
+      <if test="sex != null">
+        Sex,
+      </if>
+      <if test="age != null">
+        Age,
+      </if>
+      <if test="creationDate != null">
+        Creation_date,
+      </if>
+      <if test="collectionDate != null">
+        Collection_date,
+      </if>
+      <if test="geographicLocation != null">
+        Geographic_location,
+      </if>
+      <if test="latitude != null">
+        Latitude,
+      </if>
+      <if test="longitude != null">
+        Longitude,
+      </if>
+      <if test="pubmedId != null">
+        PubMed_ID,
+      </if>
+      <if test="conditions != null">
+        Conditions,
+      </if>
+      <if test="pheotype != null">
+        Pheotype,
+      </if>
+      <if test="breed != null">
+        Breed,
+      </if>
+      <if test="sourceDatabase != null">
+        Source_database,
+      </if>
+      <if test="bioprojectDescription != null">
+        Bioproject_description,
+      </if>
+      <if test="sampleNumber != null">
+        Sample_number,
+      </if>
+      <if test="lianjieb != null">
+        LianjieB,
+      </if>
+      <if test="outline != null">
+        Outline,
+      </if>
+      <if test="orders != null">
+        Orders,
+      </if>
+      <if test="family != null">
+        Family,
+      </if>
+      <if test="genus != null">
+        Genus,
+      </if>
+      <if test="species != null">
+        Species,
+      </if>
+      <if test="lianjiep != null">
+        LianjieP,
+      </if>
+      <if test="lianjies != null">
+        LianjieS,
+      </if>
+      <if test="lianjiee != null">
+        LianjieE,
+      </if>
+      <if test="bioprojectType != null">
+        Bioproject_type,
+      </if>
+      <if test="sampleType != null">
+        Sample_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="experimentAccession != null">
+        #{experimentAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="experimentTitle != null">
+        #{experimentTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="organismName != null">
+        #{organismName,jdbcType=VARCHAR},
+      </if>
+      <if test="instrument != null">
+        #{instrument,jdbcType=VARCHAR},
+      </if>
+      <if test="submitter != null">
+        #{submitter,jdbcType=VARCHAR},
+      </if>
+      <if test="studyAccession != null">
+        #{studyAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="studyTitle != null">
+        #{studyTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleAccession != null">
+        #{sampleAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleTitle != null">
+        #{sampleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="totalSize != null">
+        #{totalSize,jdbcType=VARCHAR},
+      </if>
+      <if test="totalRuns != null">
+        #{totalRuns,jdbcType=VARCHAR},
+      </if>
+      <if test="totalSpots != null">
+        #{totalSpots,jdbcType=VARCHAR},
+      </if>
+      <if test="totalBases != null">
+        #{totalBases,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleName != null">
+        #{sampleName,jdbcType=VARCHAR},
+      </if>
+      <if test="libraryStrategy != null">
+        #{libraryStrategy,jdbcType=VARCHAR},
+      </if>
+      <if test="librarySource != null">
+        #{librarySource,jdbcType=VARCHAR},
+      </if>
+      <if test="librarySelection != null">
+        #{librarySelection,jdbcType=VARCHAR},
+      </if>
+      <if test="bioprojectAccession != null">
+        #{bioprojectAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="biosampleAccession != null">
+        #{biosampleAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleSite1 != null">
+        #{sampleSite1,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleSite2 != null">
+        #{sampleSite2,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="collectionDate != null">
+        #{collectionDate,jdbcType=VARCHAR},
+      </if>
+      <if test="geographicLocation != null">
+        #{geographicLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="pubmedId != null">
+        #{pubmedId,jdbcType=VARCHAR},
+      </if>
+      <if test="conditions != null">
+        #{conditions,jdbcType=VARCHAR},
+      </if>
+      <if test="pheotype != null">
+        #{pheotype,jdbcType=VARCHAR},
+      </if>
+      <if test="breed != null">
+        #{breed,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceDatabase != null">
+        #{sourceDatabase,jdbcType=VARCHAR},
+      </if>
+      <if test="bioprojectDescription != null">
+        #{bioprojectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleNumber != null">
+        #{sampleNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="lianjieb != null">
+        #{lianjieb,jdbcType=VARCHAR},
+      </if>
+      <if test="outline != null">
+        #{outline,jdbcType=VARCHAR},
+      </if>
+      <if test="orders != null">
+        #{orders,jdbcType=VARCHAR},
+      </if>
+      <if test="family != null">
+        #{family,jdbcType=VARCHAR},
+      </if>
+      <if test="genus != null">
+        #{genus,jdbcType=VARCHAR},
+      </if>
+      <if test="species != null">
+        #{species,jdbcType=VARCHAR},
+      </if>
+      <if test="lianjiep != null">
+        #{lianjiep,jdbcType=VARCHAR},
+      </if>
+      <if test="lianjies != null">
+        #{lianjies,jdbcType=VARCHAR},
+      </if>
+      <if test="lianjiee != null">
+        #{lianjiee,jdbcType=VARCHAR},
+      </if>
+      <if test="bioprojectType != null">
+        #{bioprojectType,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleType != null">
+        #{sampleType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.srt.pojo.AnimalsExample" resultType="java.lang.Long">
+    select count(*) from animals
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countByView" resultType="java.lang.Long">
+    select counts from view_animals
+  </select>
+
+  <update id="updateByExampleSelective" parameterType="map">
+    update animals
+    <set>
+      <if test="record.experimentAccession != null">
+        Experiment_Accession = #{record.experimentAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="record.experimentTitle != null">
+        Experiment_Title = #{record.experimentTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organismName != null">
+        Organism_Name = #{record.organismName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.instrument != null">
+        Instrument = #{record.instrument,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitter != null">
+        Submitter = #{record.submitter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studyAccession != null">
+        Study_Accession = #{record.studyAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studyTitle != null">
+        Study_Title = #{record.studyTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleAccession != null">
+        Sample_Accession = #{record.sampleAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleTitle != null">
+        Sample_Title = #{record.sampleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalSize != null">
+        Total_Size = #{record.totalSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalRuns != null">
+        Total_RUNs = #{record.totalRuns,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalSpots != null">
+        Total_Spots = #{record.totalSpots,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalBases != null">
+        Total_Bases = #{record.totalBases,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleName != null">
+        Sample_Name = #{record.sampleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.libraryStrategy != null">
+        Library_Strategy = #{record.libraryStrategy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.librarySource != null">
+        Library_Source = #{record.librarySource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.librarySelection != null">
+        Library_Selection = #{record.librarySelection,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bioprojectAccession != null">
+        Bioproject_Accession = #{record.bioprojectAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="record.biosampleAccession != null">
+        BioSample_Accession = #{record.biosampleAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleSite1 != null">
+        Sample_site1 = #{record.sampleSite1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleSite2 != null">
+        Sample_site2 = #{record.sampleSite2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        Sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null">
+        Age = #{record.age,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creationDate != null">
+        Creation_date = #{record.creationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.collectionDate != null">
+        Collection_date = #{record.collectionDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.geographicLocation != null">
+        Geographic_location = #{record.geographicLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null">
+        Latitude = #{record.latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null">
+        Longitude = #{record.longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pubmedId != null">
+        PubMed_ID = #{record.pubmedId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conditions != null">
+        Conditions = #{record.conditions,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pheotype != null">
+        Pheotype = #{record.pheotype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.breed != null">
+        Breed = #{record.breed,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sourceDatabase != null">
+        Source_database = #{record.sourceDatabase,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bioprojectDescription != null">
+        Bioproject_description = #{record.bioprojectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleNumber != null">
+        Sample_number = #{record.sampleNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lianjieb != null">
+        LianjieB = #{record.lianjieb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outline != null">
+        Outline = #{record.outline,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orders != null">
+        Orders = #{record.orders,jdbcType=VARCHAR},
+      </if>
+      <if test="record.family != null">
+        Family = #{record.family,jdbcType=VARCHAR},
+      </if>
+      <if test="record.genus != null">
+        Genus = #{record.genus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.species != null">
+        Species = #{record.species,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lianjiep != null">
+        LianjieP = #{record.lianjiep,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lianjies != null">
+        LianjieS = #{record.lianjies,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lianjiee != null">
+        LianjieE = #{record.lianjiee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bioprojectType != null">
+        Bioproject_type = #{record.bioprojectType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleType != null">
+        Sample_type = #{record.sampleType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update animals
+    set Experiment_Accession = #{record.experimentAccession,jdbcType=VARCHAR},
+      Experiment_Title = #{record.experimentTitle,jdbcType=VARCHAR},
+      Organism_Name = #{record.organismName,jdbcType=VARCHAR},
+      Instrument = #{record.instrument,jdbcType=VARCHAR},
+      Submitter = #{record.submitter,jdbcType=VARCHAR},
+      Study_Accession = #{record.studyAccession,jdbcType=VARCHAR},
+      Study_Title = #{record.studyTitle,jdbcType=VARCHAR},
+      Sample_Accession = #{record.sampleAccession,jdbcType=VARCHAR},
+      Sample_Title = #{record.sampleTitle,jdbcType=VARCHAR},
+      Total_Size = #{record.totalSize,jdbcType=VARCHAR},
+      Total_RUNs = #{record.totalRuns,jdbcType=VARCHAR},
+      Total_Spots = #{record.totalSpots,jdbcType=VARCHAR},
+      Total_Bases = #{record.totalBases,jdbcType=VARCHAR},
+      Sample_Name = #{record.sampleName,jdbcType=VARCHAR},
+      Library_Strategy = #{record.libraryStrategy,jdbcType=VARCHAR},
+      Library_Source = #{record.librarySource,jdbcType=VARCHAR},
+      Library_Selection = #{record.librarySelection,jdbcType=VARCHAR},
+      Bioproject_Accession = #{record.bioprojectAccession,jdbcType=VARCHAR},
+      BioSample_Accession = #{record.biosampleAccession,jdbcType=VARCHAR},
+      Sample_site1 = #{record.sampleSite1,jdbcType=VARCHAR},
+      Sample_site2 = #{record.sampleSite2,jdbcType=VARCHAR},
+      Sex = #{record.sex,jdbcType=VARCHAR},
+      Age = #{record.age,jdbcType=VARCHAR},
+      Creation_date = #{record.creationDate,jdbcType=VARCHAR},
+      Collection_date = #{record.collectionDate,jdbcType=VARCHAR},
+      Geographic_location = #{record.geographicLocation,jdbcType=VARCHAR},
+      Latitude = #{record.latitude,jdbcType=VARCHAR},
+      Longitude = #{record.longitude,jdbcType=VARCHAR},
+      PubMed_ID = #{record.pubmedId,jdbcType=VARCHAR},
+      Conditions = #{record.conditions,jdbcType=VARCHAR},
+      Pheotype = #{record.pheotype,jdbcType=VARCHAR},
+      Breed = #{record.breed,jdbcType=VARCHAR},
+      Source_database = #{record.sourceDatabase,jdbcType=VARCHAR},
+      Bioproject_description = #{record.bioprojectDescription,jdbcType=VARCHAR},
+      Sample_number = #{record.sampleNumber,jdbcType=VARCHAR},
+      LianjieB = #{record.lianjieb,jdbcType=VARCHAR},
+      Outline = #{record.outline,jdbcType=VARCHAR},
+      Orders = #{record.orders,jdbcType=VARCHAR},
+      Family = #{record.family,jdbcType=VARCHAR},
+      Genus = #{record.genus,jdbcType=VARCHAR},
+      Species = #{record.species,jdbcType=VARCHAR},
+      LianjieP = #{record.lianjiep,jdbcType=VARCHAR},
+      LianjieS = #{record.lianjies,jdbcType=VARCHAR},
+      LianjieE = #{record.lianjiee,jdbcType=VARCHAR},
+      Bioproject_type = #{record.bioprojectType,jdbcType=VARCHAR},
+      Sample_type = #{record.sampleType,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.srt.pojo.Animals">
+    update animals
+    <set>
+      <if test="experimentTitle != null">
+        Experiment_Title = #{experimentTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="organismName != null">
+        Organism_Name = #{organismName,jdbcType=VARCHAR},
+      </if>
+      <if test="instrument != null">
+        Instrument = #{instrument,jdbcType=VARCHAR},
+      </if>
+      <if test="submitter != null">
+        Submitter = #{submitter,jdbcType=VARCHAR},
+      </if>
+      <if test="studyAccession != null">
+        Study_Accession = #{studyAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="studyTitle != null">
+        Study_Title = #{studyTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleAccession != null">
+        Sample_Accession = #{sampleAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleTitle != null">
+        Sample_Title = #{sampleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="totalSize != null">
+        Total_Size = #{totalSize,jdbcType=VARCHAR},
+      </if>
+      <if test="totalRuns != null">
+        Total_RUNs = #{totalRuns,jdbcType=VARCHAR},
+      </if>
+      <if test="totalSpots != null">
+        Total_Spots = #{totalSpots,jdbcType=VARCHAR},
+      </if>
+      <if test="totalBases != null">
+        Total_Bases = #{totalBases,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleName != null">
+        Sample_Name = #{sampleName,jdbcType=VARCHAR},
+      </if>
+      <if test="libraryStrategy != null">
+        Library_Strategy = #{libraryStrategy,jdbcType=VARCHAR},
+      </if>
+      <if test="librarySource != null">
+        Library_Source = #{librarySource,jdbcType=VARCHAR},
+      </if>
+      <if test="librarySelection != null">
+        Library_Selection = #{librarySelection,jdbcType=VARCHAR},
+      </if>
+      <if test="bioprojectAccession != null">
+        Bioproject_Accession = #{bioprojectAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="biosampleAccession != null">
+        BioSample_Accession = #{biosampleAccession,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleSite1 != null">
+        Sample_site1 = #{sampleSite1,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleSite2 != null">
+        Sample_site2 = #{sampleSite2,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        Sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        Age = #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        Creation_date = #{creationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="collectionDate != null">
+        Collection_date = #{collectionDate,jdbcType=VARCHAR},
+      </if>
+      <if test="geographicLocation != null">
+        Geographic_location = #{geographicLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        Latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        Longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="pubmedId != null">
+        PubMed_ID = #{pubmedId,jdbcType=VARCHAR},
+      </if>
+      <if test="conditions != null">
+        Conditions = #{conditions,jdbcType=VARCHAR},
+      </if>
+      <if test="pheotype != null">
+        Pheotype = #{pheotype,jdbcType=VARCHAR},
+      </if>
+      <if test="breed != null">
+        Breed = #{breed,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceDatabase != null">
+        Source_database = #{sourceDatabase,jdbcType=VARCHAR},
+      </if>
+      <if test="bioprojectDescription != null">
+        Bioproject_description = #{bioprojectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleNumber != null">
+        Sample_number = #{sampleNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="lianjieb != null">
+        LianjieB = #{lianjieb,jdbcType=VARCHAR},
+      </if>
+      <if test="outline != null">
+        Outline = #{outline,jdbcType=VARCHAR},
+      </if>
+      <if test="orders != null">
+        Orders = #{orders,jdbcType=VARCHAR},
+      </if>
+      <if test="family != null">
+        Family = #{family,jdbcType=VARCHAR},
+      </if>
+      <if test="genus != null">
+        Genus = #{genus,jdbcType=VARCHAR},
+      </if>
+      <if test="species != null">
+        Species = #{species,jdbcType=VARCHAR},
+      </if>
+      <if test="lianjiep != null">
+        LianjieP = #{lianjiep,jdbcType=VARCHAR},
+      </if>
+      <if test="lianjies != null">
+        LianjieS = #{lianjies,jdbcType=VARCHAR},
+      </if>
+      <if test="lianjiee != null">
+        LianjieE = #{lianjiee,jdbcType=VARCHAR},
+      </if>
+      <if test="bioprojectType != null">
+        Bioproject_type = #{bioprojectType,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleType != null">
+        Sample_type = #{sampleType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Experiment_Accession = #{experimentAccession,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.srt.pojo.Animals">
+    update animals
+    set Experiment_Title = #{experimentTitle,jdbcType=VARCHAR},
+      Organism_Name = #{organismName,jdbcType=VARCHAR},
+      Instrument = #{instrument,jdbcType=VARCHAR},
+      Submitter = #{submitter,jdbcType=VARCHAR},
+      Study_Accession = #{studyAccession,jdbcType=VARCHAR},
+      Study_Title = #{studyTitle,jdbcType=VARCHAR},
+      Sample_Accession = #{sampleAccession,jdbcType=VARCHAR},
+      Sample_Title = #{sampleTitle,jdbcType=VARCHAR},
+      Total_Size = #{totalSize,jdbcType=VARCHAR},
+      Total_RUNs = #{totalRuns,jdbcType=VARCHAR},
+      Total_Spots = #{totalSpots,jdbcType=VARCHAR},
+      Total_Bases = #{totalBases,jdbcType=VARCHAR},
+      Sample_Name = #{sampleName,jdbcType=VARCHAR},
+      Library_Strategy = #{libraryStrategy,jdbcType=VARCHAR},
+      Library_Source = #{librarySource,jdbcType=VARCHAR},
+      Library_Selection = #{librarySelection,jdbcType=VARCHAR},
+      Bioproject_Accession = #{bioprojectAccession,jdbcType=VARCHAR},
+      BioSample_Accession = #{biosampleAccession,jdbcType=VARCHAR},
+      Sample_site1 = #{sampleSite1,jdbcType=VARCHAR},
+      Sample_site2 = #{sampleSite2,jdbcType=VARCHAR},
+      Sex = #{sex,jdbcType=VARCHAR},
+      Age = #{age,jdbcType=VARCHAR},
+      Creation_date = #{creationDate,jdbcType=VARCHAR},
+      Collection_date = #{collectionDate,jdbcType=VARCHAR},
+      Geographic_location = #{geographicLocation,jdbcType=VARCHAR},
+      Latitude = #{latitude,jdbcType=VARCHAR},
+      Longitude = #{longitude,jdbcType=VARCHAR},
+      PubMed_ID = #{pubmedId,jdbcType=VARCHAR},
+      Conditions = #{conditions,jdbcType=VARCHAR},
+      Pheotype = #{pheotype,jdbcType=VARCHAR},
+      Breed = #{breed,jdbcType=VARCHAR},
+      Source_database = #{sourceDatabase,jdbcType=VARCHAR},
+      Bioproject_description = #{bioprojectDescription,jdbcType=VARCHAR},
+      Sample_number = #{sampleNumber,jdbcType=VARCHAR},
+      LianjieB = #{lianjieb,jdbcType=VARCHAR},
+      Outline = #{outline,jdbcType=VARCHAR},
+      Orders = #{orders,jdbcType=VARCHAR},
+      Family = #{family,jdbcType=VARCHAR},
+      Genus = #{genus,jdbcType=VARCHAR},
+      Species = #{species,jdbcType=VARCHAR},
+      LianjieP = #{lianjiep,jdbcType=VARCHAR},
+      LianjieS = #{lianjies,jdbcType=VARCHAR},
+      LianjieE = #{lianjiee,jdbcType=VARCHAR},
+      Bioproject_type = #{bioprojectType,jdbcType=VARCHAR},
+      Sample_type = #{sampleType,jdbcType=VARCHAR}
+    where Experiment_Accession = #{experimentAccession,jdbcType=VARCHAR}
+  </update>
+</mapper>

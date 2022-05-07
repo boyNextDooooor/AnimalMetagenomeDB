@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title></title>
+    <link rel="stylesheet" href="../ant-design-vue-1.7.2/package/dist/antd.min.css">
+    <link rel="stylesheet" href="../css/submit.css">
+</head>
+<body>
+<div id="app">
+
+    <!--头部-->
+    <div class="topBox">
+        <!--标题-->
+        <div class="logo" style="white-space: nowrap;line-height: 75px;">
+            <span class="logo-span" style="font-size: 30px;margin-left: 150px;">AnimalMetagenome DB</span>
+        </div>
+        <!--菜单-->
+        <div class="butTb">
+            <img class="tb" src="../images/biao.png">
+        </div>
+
+        <div class="nav">
+            <ul>
+                <li><a href="../../homePages.html">Home</a></li>
+                <li><a href="browser.html">Browse</a></li>
+                <li><a href="Search.html">Search</a></li>
+                <li><a href="map.html">Map</a></li>
+                <li><a href="help.html">Help</a></li>
+                <li><a href="submit.html" class="active">Submit</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="top">
+
+        <div class="top-title">
+            <p>
+                <b>Submit New Animal Metagenome</b>
+            </p>
+        </div>
+
+        <div class="top-content">
+            <div>
+                <p>
+                    Welcome to submit new information on associations animalmetagenome to the Animal Metagenome database (* Required fields)
+                </p>
+            </div>
+            <div class="top-content-bd" >
+                <template>
+                    <a-form-model
+                            ref="ruleForm"
+                            :model="form"
+                            :label-col="labelCol"
+                            :wrapper-col="wrapperCol"
+                            :rules="rules"
+                    >
+                        <a-form-model-item ref="Species" label="Species"  prop="Species">
+                            <a-input
+                                    v-model="form.Species"
+                                    @blur="
+                                          () => {
+                                            $refs.name.onFieldBlur();
+                                          }
+                                        "
+                            />
+                        </a-form-model-item>
+                        <a-form-model-item ref="Bioproject_Accession" label="Bioproject accession" prop="Bioproject_Accession">
+                            <a-input  v-model="form.Bioproject_Accession"/>
+                        </a-form-model-item>
+                        <a-form-model-item label="Bioproject Type" prop="Bioproject_Type">
+                            <a-input  v-model="form.Bioproject_Type"/>
+                        </a-form-model-item>
+                        <a-form-model-item label="Feference PMID" prop="Feference_PMID">
+                            <a-input  v-model="form.Feference_PMID"/>
+                        </a-form-model-item>
+                        <a-form-model-item ref="Email" label="Email" prop="Email">
+                            <a-input  v-model="form.Email"/>
+                        </a-form-model-item>
+                        <a-form-model-item label="Detail" prop="desc">
+                            <a-input v-model="form.desc" type="textarea" style="height: 100px"/>
+                        </a-form-model-item>
+                        <a-form-model-item :wrapper-col="{ span: 14, offset: 16 }">
+                            <a-button type="primary" @click="onSubmit">
+                                Submit
+                            </a-button>
+                        </a-form-model-item>
+                    </a-form-model>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <!--底部-->
+    <div class="foot">
+        <p>Copyright ©College of Life Sciences, Shihezi University</p>　
+    </div>
+
+</div>
+</body>
+<script src="../vuejs/axios.js"></script>
+<script src="../vuejs/vue.js"></script>
+<script src="../ant-design-vue-1.7.2/package/dist/antd.js"></script>
+<script src="../script/jquery1.11.3.min.js"></script>
+<script src="../localstyle/submit.js"></script>
+<script>
+    var isShow=false
+    $(document).ready(function(){
+
+        $(".tb").click(function(){
+            if(isShow==false){
+                $(".nav").css("display","block");
+            }
+            else{
+                $(".nav").css("display","none");
+            }
+            isShow=!isShow
+        });
+    });
+</script>
+<!--<script>-->
+
+<!--    $(document).ready(function(){-->
+<!--        $(".tb").click(function(){-->
+<!--            $(".nav").css("display","block");-->
+<!--        });-->
+<!--        // $("a").click(function(){-->
+<!--        //     $(".nav").css("display","none");-->
+<!--        // });-->
+<!--    });-->
+
+<!--    window.onresize = function(){-->
+<!--        document.getElementById("app").style.height = (window.innerHeight + 'px');-->
+<!--        document.getElementById("app").style.width = (window.innerWidth + 'px');-->
+<!--        console.log(window.innerHeight,window.innerWidth)-->
+<!--    }-->
+
+<!--    function getkg(){-->
+<!--        // console.log(window.innerHeight,window.innerWidth)-->
+<!--        document.getElementById("app").style.height = (window.innerHeight + 'px');-->
+<!--        document.getElementById("app").style.width = (window.innerWidth + 'px');-->
+<!--    }-->
+
+<!--</script>-->
+</html>
+
+<!--<script src="../localstyle/submit.js"></script>-->
+<!--<script>-->
+<!--    window.onresize = function (){-->
+<!--        //document.getElementById("app").style.height = (window.innerHeight * 0.082 + "px");-->
+<!--        $(".nav-ul-li-a").css({"line-height":window.innerHeight * 0.082 + "px"});-->
+<!--        // document.getElementById("myiframe").style.height = (window.innerHeight * 0.9 + "px");-->
+<!--        document.getElementsByClassName("foot")[0].style.height = (window.innerHeight * 0.07 + "px");-->
+<!--        //$("#myiframe").css({"min-height":(window.innerHeight * 0.9 + "px")});-->
+<!--        //alert("!");-->
+<!--    }-->
+<!--    function changeWindow(){-->
+<!--        // console.log(window.innerHeight + "||" + window.innerWidth);-->
+<!--        //document.getElementById("app").style.height = (window.innerHeight * 0.082 + "px");-->
+<!--        $(".nav-ul-li-a").css({"line-height":window.innerHeight * 0.082 + "px"});-->
+<!--        // document.getElementById("myiframe").style.height = (window.innerHeight * 0.9 + "px");-->
+<!--        document.getElementsByClassName("foot")[0].style.height = (window.innerHeight * 0.07 + "px");-->
+<!--        // document.getElementsByClassName("top")[0].style.line-height = (window.innerHeight * 0.082 + "px");-->
+<!--    }-->
+<!--</script>-- >
+

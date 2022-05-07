@@ -1,0 +1,639 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>空间查询</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.19/"></script>
+    <script src="../script/jquery-2.0.3.min.js"></script>
+
+    <style>
+
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        #viewDiv {
+            height: 60%;
+            width: 100%;
+        }
+
+        .container {
+            height: 40%;
+            width: 100%;
+        }
+    </style>
+    <script>
+        require([
+            "esri/widgets/Sketch",
+            "esri/Map",
+            "esri/layers/GraphicsLayer",
+            "esri/views/MapView",
+            "esri/Basemap",
+            "esri/layers/FeatureLayer",
+            "esri/layers/CSVLayer",
+            "esri/views/draw/Draw",
+            "esri/Graphic",
+            "esri/tasks/IdentifyTask",
+            "esri/tasks/support/IdentifyParameters",
+            "esri/tasks/QueryTask",
+            "esri/tasks/support/Query",
+            "esri/symbols/SimpleLineSymbol",
+            "esri/symbols/SimpleFillSymbol",
+            "esri/widgets/FeatureTable",
+            "esri/widgets/Sketch/SketchViewModel",
+            "esri/geometry/geometryEngineAsync",
+            "dojo/dom",
+            "dojo/on",
+            "esri/Color",
+            "esri/layers/support/Field"
+        ], function (Sketch, Map, GraphicsLayer, MapView, Basemap, FeatureLayer, CSVLayer,
+                     Draw, Graphic, IdentifyTask, IdentifyParameters, QueryTask, Query, SimpleLineSymbol, SimpleFillSymbol,
+                     FeatureTable, SketchViewModel, geometryEngineAsync,
+                     dom, on, Color, Field) {
+            //实例化一个图形图层
+            const layer = new GraphicsLayer();
+
+            let fields = [
+                new Field({
+                    "name": "Study Title",
+                    "alias": "Study Title",
+                    "type": "string"
+                }), new Field ({
+                    "name": "Creation Date",
+                    "alias": "Creation Date",
+                    "type": "string"
+                }), new Field ({
+                    "name": "Collection Date",
+                    "alias": "Collection Date",
+                    "type": "string"
+                }), new Field ({
+                    "name": "Instrument",
+                    "alias": "Instrument",
+                    "type": "string"
+                })
+                // , new Field ({
+                //     "name": "PubMed_ID",
+                //     "alias": "PubMed_ID",
+                //     "type": "string"
+                // }), new Field ({
+                //     "name": "Bioproject_Type",
+                //     "alias": "Bioproject_Type",
+                //     "type": "string"
+                // }), new Field ({
+                //     "name": "Creation_date",
+                //     "alias": "Creation_date",
+                //     "type": "string"
+                // }), new Field ({
+                //     "name": "Collection_date",
+                //     "alias": "Collection_date",
+                //     "type": "string"
+                // })
+            ]
+
+            //csv图层（Excel转化）
+            const csvLayer = new CSVLayer({
+                useViewTime: false,
+                url: "http://47.104.204.87:80/static/csv/animals.csv",
+                delimiter: ",",
+                fields: fields,
+                popupTemplate: {
+                    title: "{unit_name}",
+                    content:
+                        "Established on <b>{date_est}</b> <br /><br /> {description}"
+                },
+                renderer: setRenderer()
+            });
+
+            // console.log(csvLayer);
+
+            let csvLayerView;
+            csvLayer.when(() => {
+                view.whenLayerView(csvLayer).then(function (layerView) {
+                    csvLayerView = layerView;
+                    document.getElementsByClassName("esri-feature-table__title")[0].innerText = document.getElementsByClassName("esri-feature-table__title")[0].innerText.replace("要素","factor").replace("已选择","selected");
+                    document.getElementsByClassName("esri-feature-table__title")[0].addEventListener("DOMNodeInserted",function(){
+                        document.getElementsByClassName("esri-feature-table__title")[0].innerText = document.getElementsByClassName("esri-feature-table__title")[0].innerText.replace("要素","factor").replace("已选择","selected");
+                    });
+                });
+            })
+                .catch(errorCallback);
+
+            //创建地图对象
+            const map = new Map({
+                basemap: 'streets',
+                layers: [layer, csvLayer]
+            });
+            //渲染二维地图
+            const view = new MapView({
+                container: "viewDiv",
+                map: map,
+                zoom: 6,
+                center: [108, 33]
+            });
+            // create a new instance of a FeatureTable
+            //底部要素表
+
+            const featureTable = new FeatureTable({
+                view: view,
+                layer: csvLayer,
+                highlightOnRowSelectEnabled: false,
+                // fieldConfigs: [
+                //     {
+                //         name: "Bioproject_Accession",
+                //         label: "Bioproject accession"
+                //     },
+                //     {
+                //         name: "Study_Accession",
+                //         label: "Study accession"
+                //     },
+                //     {
+                //         name: "Experiment_Accession",
+                //         label: "Experiment accession"
+                //     },
+                //     {
+                //         name: "PubMed_ID",
+                //         label: "PubMed ID"
+                //     },
+                //     {
+                //         name: "Study_Title",
+                //         label: "Study title",
+                //     },
+                //     {
+                //         name: "Creation_Date",
+                //         label: "Creation date"
+                //     },
+                //     {
+                //         name: "Bioproject_Type",
+                //         label: "Bioproject type"
+                //     },
+                //     {
+                //         name: "Bioproject_Description",
+                //         label: "Bioproject description"
+                //     },
+                //     {
+                //         name: "Sample_Accession",
+                //         label: "Sample accession"
+                //     },
+                //     {
+                //         name: "BioSample_Accession",
+                //         label: "BioSample accession"
+                //     },
+                //     {
+                //         name: "Sample_Name",
+                //         label: "Sample name"
+                //     },
+                //     {
+                //         name: "Sample_Site1",
+                //         label: "Sample site1"
+                //     },
+                //     {
+                //         name: "Sex",
+                //         label: "Sex"
+                //     },
+                //     {
+                //         name: "Age",
+                //         label: "Age"
+                //     },
+                //     {
+                //         name: "Collection_Date",
+                //         label: "Collection date"
+                //     },
+                //     {
+                //         name: "Geographic_Location",
+                //         label: "Geographic location"
+                //     },
+                //     {
+                //         name: "Condition",
+                //         label: "Condition"
+                //     },
+                //     {
+                //         name: "Pheotype",
+                //         label: "Pheotype"
+                //     },
+                //     {
+                //         name: "Breed",
+                //         label: "Breed"
+                //     },
+                //     {
+                //         name: "Instrument",
+                //         label: "Instrument"
+                //     },
+                //     {
+                //         name: "Library_Source",
+                //         label: "Library source"
+                //     },
+                //     {
+                //         name: "Library_Strategy",
+                //         label: "Library strategy"
+                //     },
+                //     {
+                //         name: "Total_Size",
+                //         label: "Total size(Mb)"
+                //     },
+                //     {
+                //         name: "Total_Spots",
+                //         label: "Total spots"
+                //     },
+                //     {
+                //         name: "Total_Bases",
+                //         label: "Total bases"
+                //     },
+                //     {
+                //         name: "Species",
+                //         label: "Species"
+                //     },
+                //     {
+                //         name: "Genus",
+                //         label: "Genus"
+                //     },
+                //     {
+                //         name: "Family",
+                //         label: "Family"
+                //     },
+                //     {
+                //         name: "Order",
+                //         label: "Order"
+                //     },
+                //     {
+                //         name: "Class",
+                //         label: "Class"
+                //     },
+                //     {
+                //         name: "Sample_Type",
+                //         label: "Sample type"
+                //     }
+                // ],
+                container: document.getElementById("tableDiv")
+            });
+
+            // this array will keep track of selected feature objectIds to
+            // sync the layerview effects and feature table selection
+            let features = [];
+
+            // Listen for the table's selection-change event
+            featureTable.on("selection-change", (changes) => {
+                // if the feature is unselected then remove the objectId
+                // of the removed feature from the features array
+                changes.removed.forEach((item) => {
+                    const data = features.find((data) => {
+                        return data === item.objectId;
+                    });
+                    if (data) {
+                        features.splice(features.indexOf(data), 1);
+                    }
+                });
+
+                // If the selection is added, push all added selections to array
+                changes.added.forEach((item) => {
+                    features.push(item.objectId);
+                });
+
+                // set excluded effect on the features that are not selected in the table
+                csvLayerView.effect = {
+                    filter: {
+                        objectIds: features
+                    },
+                    excludedEffect: "blur(5px) grayscale(90%) opacity(40%)"
+                };
+                // setTimeout(() => {
+                //     document.getElementsByClassName("esri-feature-table__title")[0].innerText = document.getElementsByClassName("esri-feature-table__title")[0].innerText.replace("要素","factor").replace("已选择","selected");
+                // },1);
+            });
+
+
+            // polygonGraphicsLayer will be used by the sketchviewmodel
+            // show the polygon being drawn on the view
+            const polygonGraphicsLayer = new GraphicsLayer();
+            map.add(polygonGraphicsLayer);
+
+            // add the select by rectangle button the view
+            view.ui.add("select-by-rectangle", "top-left");
+            const selectButton = document.getElementById("select-by-rectangle");
+
+
+            // click event for the select by rectangle button
+            selectButton.addEventListener("click", () => {
+                view.popup.close();
+                sketchViewModel.create("rectangle");
+            });
+
+
+            // add the clear selection button the view
+            view.ui.add("clear-selection", "top-left");
+            document.getElementById("clear-selection").addEventListener("click", () => {
+                featureTable.clearSelection();
+                polygonGraphicsLayer.removeAll();
+            });
+
+            // create a new sketch view model set its layer
+            const sketchViewModel = new SketchViewModel({
+                view: view,
+                layer: polygonGraphicsLayer
+            });
+
+
+            // Once user is done drawing a rectangle on the map
+            // use the rectangle to select features on the map and table
+            sketchViewModel.on("create", async (event) => {
+                if (event.state === "complete") {
+                    // this polygon will be used to query features that intersect it
+                    const geometries = polygonGraphicsLayer.graphics.map(function (graphic) {
+                        return graphic.geometry
+                    });
+                    const queryGeometry = await geometryEngineAsync.union(geometries.toArray());
+                    selectFeatures(queryGeometry);
+                }
+            });
+
+            // This function is called when user completes drawing a rectangle
+            // on the map. Use the rectangle to select features in the layer and table
+            function selectFeatures(geometry) {
+                if (csvLayerView) {
+                    // create a query and set its geometry parameter to the
+                    // rectangle that was drawn on the view
+                    const query = {
+                        geometry: geometry,
+                        outFields: ["*"]
+                    };
+
+                    // query graphics from the csv layer view. Geometry set for the query
+                    // can be polygon for point features and only intersecting geometries are returned
+                    csvLayerView.queryFeatures(query)
+                        .then((results) => {
+                            if (results.features.length === 0) {
+                                clearSelection();
+                            } else {
+                                // pass in the query results to the table by calling its selectRows method.
+                                // This will trigger FeatureTable's selection-change event
+                                // where we will be setting the feature effect on the csv layer view
+                                featureTable.filterGeometry = geometry;
+                                featureTable.selectRows(results.features);
+                            }
+                        })
+                        .catch(errorCallback);
+                }
+            }
+
+
+            function errorCallback(error) {
+                console.log("error happened:", error.message);
+            }
+
+            // this is called from CSVLayer constructor
+            // 推针 CIM symbol
+            ///图形渲染
+            function setRenderer() {
+                return {
+                    type: "simple",
+                    symbol: {
+                        type: "cim",
+                        "data": {
+                            "type": "CIMSymbolReference",
+                            "symbol": {
+                                "type": "CIMPointSymbol",
+                                "symbolLayers": [
+                                    {
+                                        "type": "CIMVectorMarker",
+                                        "enable": true,
+                                        "anchorPoint": {
+                                            "x": 0,
+                                            "y": -0.5
+                                        },
+                                        "anchorPointUnits": "Relative",
+                                        "dominantSizeAxis3D": "Y",
+                                        "size": 18.5,
+                                        "billboardMode3D": "FaceNearPlane",
+                                        "frame": {
+                                            "xmin": 0,
+                                            "ymin": 0,
+                                            "xmax": 21,
+                                            "ymax": 21
+                                        },
+                                        "markerGraphics": [
+                                            {
+                                                "type": "CIMMarkerGraphic",
+                                                "geometry": {
+                                                    "rings": [
+                                                        [
+                                                            [
+                                                                15.2,
+                                                                16.3
+                                                            ],
+                                                            [
+                                                                15.13,
+                                                                15.47
+                                                            ],
+                                                            [
+                                                                14.9,
+                                                                14.66
+                                                            ],
+                                                            [
+                                                                14.54,
+                                                                13.91
+                                                            ],
+                                                            [
+                                                                14.05,
+                                                                13.24
+                                                            ],
+                                                            [
+                                                                13.44,
+                                                                12.65
+                                                            ],
+                                                            [
+                                                                12.74,
+                                                                12.19
+                                                            ],
+                                                            [
+                                                                11.97,
+                                                                11.86
+                                                            ],
+                                                            [
+                                                                11.15,
+                                                                11.67
+                                                            ],
+                                                            [
+                                                                11.15,
+                                                                1.3
+                                                            ],
+                                                            [
+                                                                10.5,
+                                                                0
+                                                            ],
+                                                            [
+                                                                9.85,
+                                                                1.3
+                                                            ],
+                                                            [
+                                                                9.85,
+                                                                11.67
+                                                            ],
+                                                            [
+                                                                9.03,
+                                                                11.86
+                                                            ],
+                                                            [
+                                                                8.26,
+                                                                12.19
+                                                            ],
+                                                            [
+                                                                7.56,
+                                                                12.65
+                                                            ],
+                                                            [
+                                                                6.95,
+                                                                13.24
+                                                            ],
+                                                            [
+                                                                6.46,
+                                                                13.91
+                                                            ],
+                                                            [
+                                                                6.1,
+                                                                14.66
+                                                            ],
+                                                            [
+                                                                5.87,
+                                                                15.47
+                                                            ],
+                                                            [
+                                                                5.8,
+                                                                16.3
+                                                            ],
+                                                            [
+                                                                5.89,
+                                                                17.22
+                                                            ],
+                                                            [
+                                                                6.16,
+                                                                18.1
+                                                            ],
+                                                            [
+                                                                6.59,
+                                                                18.91
+                                                            ],
+                                                            [
+                                                                7.18,
+                                                                19.63
+                                                            ],
+                                                            [
+                                                                7.89,
+                                                                20.21
+                                                            ],
+                                                            [
+                                                                8.7,
+                                                                20.64
+                                                            ],
+                                                            [
+                                                                9.58,
+                                                                20.91
+                                                            ],
+                                                            [
+                                                                10.5,
+                                                                21
+                                                            ],
+                                                            [
+                                                                11.42,
+                                                                20.91
+                                                            ],
+                                                            [
+                                                                12.3,
+                                                                20.64
+                                                            ],
+                                                            [
+                                                                13.11,
+                                                                20.21
+                                                            ],
+                                                            [
+                                                                13.82,
+                                                                19.62
+                                                            ],
+                                                            [
+                                                                14.41,
+                                                                18.91
+                                                            ],
+                                                            [
+                                                                14.84,
+                                                                18.1
+                                                            ],
+                                                            [
+                                                                15.11,
+                                                                17.22
+                                                            ],
+                                                            [
+                                                                15.2,
+                                                                16.3
+                                                            ]
+                                                        ]
+                                                    ]
+                                                },
+                                                "symbol": {
+                                                    "type": "CIMPolygonSymbol",
+                                                    "symbolLayers": [
+                                                        {
+                                                            "type": "CIMSolidStroke",
+                                                            "enable": true,
+                                                            "capStyle": "Round",
+                                                            "joinStyle": "Round",
+                                                            "lineStyle3D": "Strip",
+                                                            "miterLimit": 10,
+                                                            "width": 0,
+                                                            "color": [
+                                                                110,
+                                                                110,
+                                                                110,
+                                                                255
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "CIMSolidFill",
+                                                            "enable": true,
+                                                            "color": [
+                                                                201,
+                                                                49,
+                                                                0,
+                                                                255
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ],
+                                        "scaleSymbolsProportionally": true,
+                                        "respectFrame": true
+                                    }
+                                ],
+                                "haloSize": 1,
+                                "scaleX": 1,
+                                "angleAlignment": "Display",
+                                "version": "2.0.0",
+                                "build": "8933"
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+<div id="viewDiv"></div>
+<div id="select-by-rectangle" class="esri-widget esri-widget--button esri-widget esri-interactive"
+     title="Select features by rectangle">
+    <span class="esri-icon-checkbox-unchecked"></span>
+</div>
+<div id="clear-selection" class="esri-widget esri-widget--button esri-widget esri-interactive"
+     title="Clear selection">
+    <span class="esri-icon-erase"></span>
+</div>
+<div class="container">
+    <div id="tableDiv"></div>
+</div>
+</body>
+</html>

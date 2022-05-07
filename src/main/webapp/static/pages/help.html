@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/help.css">
+</head>
+<body>
+<div id="app">
+
+    <!--头部-->
+    <div class="topBox">
+        <!--标题-->
+        <div class="logo" style="white-space: nowrap;line-height: 75px;">
+            <span class="logo-span" style="font-size: 30px;margin-left: 150px;">AnimalMetagenome DB</span>
+        </div>
+        <!--菜单-->
+        <div class="butTb">
+            <img class="tb" src="../images/biao.png">
+        </div>
+
+        <div class="nav">
+            <ul>
+                <li><a href="../../homePages.html">Home</a></li>
+                <li><a href="browser.html">Browse</a></li>
+                <li><a href="Search.html">Search</a></li>
+                <li><a href="map.html">Map</a></li>
+                <li><a href="help.html" class="active">Help</a></li>
+                <li><a href="submit.html">Submit</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <div class="content-ml" style="margin-right: 15%;">
+            <div class="circle navigation-fixed" id="subTitle">
+                <div>
+                    <h5 class="circleh">Navigation</h5>
+                </div>
+                <nav>
+                    <nav>
+                        <a class="nav-link" href="#help1" style="margin-top: 5px;">What is the AnimalMetagenome DB</a>
+                        <a class="nav-link" href="#help2">How to use the AnimalMetagenome DB</a>
+                        <nav>
+                            <a class="nav-link" href="#help2-1" style="margin-left: 40px;">Browse</a>
+                            <a class="nav-link" href="#help2-2" style="margin-left: 40px;">Search</a>
+                            <a class="nav-link" href="#help2-3" style="margin-left: 40px;margin-bottom: 5px;">Map</a>
+                        </nav>
+                    </nav>
+                </nav>
+            </div>
+        </div>
+
+        <div class="content-nr">
+            <div class="circle">
+                <div>
+                    <h5 class="circleh" id="help1">What is the AnimalMetagenome DB</h5></div>
+                <div>
+<!--                    <p class="circlep">AnimalMetagenome DB version 1.0 contains metadata for 82,097 metagenomes from domestic animals (pigs, bovines, horses, and sheep) and 540 wild animals. These metagenomes cover 15 years of experiments, 73 countries, 1,044 studies, and 69,302 samples. Users can browse, search and download for animal metagenome data of interest by selecting animal species, sample site, project type, sequencing platform, etc.</p>-->
+                    <p class="circlep">AnimalMetagenome DB version 1.0 includes metadata for 82,097 metagenomes from 4 domestic animals (pig, bovine, horse and sheep) and 540 wild animals. These metagenomes cover 15 years of experiments, 73 countries, and 1,044 studies. Researchers can browse, search and download for animal metagenome data of interest by selecting animal species, sample site, study purpose, DNA extraction method, sequencing platform, etc.</p>
+                </div>
+            </div>
+            <br>
+            <div class="circle">
+                <div>
+                    <h5 class="circleh" id="help2">How to use the AnimalMetagenome DB</h5>
+                </div>
+                <div>
+                    <h5 class="circleh1" id="help2-1" style="margin: 10px 0 0 10px;">Browse</h5>
+<!--                    <p class="circlep">User can use "Browse" to view all animal metagenome projects in the current version of the database (1044 studies in total) and can filter data sets based on three attributes, including "Domestic animal", "Wild animal" and " Bioproject type ". The main information of animal metagenomic projects will be displayed below the screening box, including “Bioproject accession”, “Study title”, “Sample number”, and “Library strategy”. Click "+" to view the “Project description” and "Project type". After filtering, the metadata of the selected study can be downloaded as an Excel file.</div>-->
+                    <p class="circlep">"Browse", displays the specific information of species, study purpose, and sample site. Users can choose any category or subcategory of interest to obtain results. In addition, users can further filter the dataset by selecting single or multiple filters of "Species", "Study Purpose ", and "Sample Site" in the obtained results. After filtering, the metadata of the selected item can be downloaded as an Excel file. The queried information will be displayed below the screening box, including project ID, sample ID, experiment ID, PubMed ID, species, sample site2, study purpose, creation date, library strategy, and DNA extraction method.</div>
+
+            <hr style="height:3px;border:none;border-top:1px solid #17a2b8;">
+                <div>
+                    <h5 class="circleh1" id="help2-2" style="margin: 10px 0 0 10px;">Search</h5>
+<!--                    <p class="circlep">User can use "Search" to view the all contents of AnimalMetagenome DB (82097 animal metagenomic metadata in total), and can filter the data set based on five attributes, including "Species", "Sample site", "Sequencing platform", "Library strategy", and "Bioproject type". All animal metagenomic metadata will be displayed in the search section, including samples that are not marked with geographic location. The information about each sample —“Bioproject accession”, “Study accession”, “Experiment accession”, and “PubMed ID” (if present)—can be hyperlinked to the source database. Users can filter animal metagenomic metadata by selecting single or multiple attributes of interest. After filtering, the metadata of the selected sample can be downloaded as an Excel file.</div>-->
+                    <p class="circlep">“Search”, contains all the data of the current version of the database (8,2097 animal metagenomic metadata in total). The data set can be filtered according to the nine attributes “Species”, “Sample Site”, “DNA Extraction Method”, “Sequencing Platform”, “Library Strategy”, “Study Purpose”, “Creation Date”, “Sex”, and “Age”. All animal metagenomic metadata will be displayed in the search section, including samples that are not marked with geographic location. Users can filter animal metagenomic metadata by selecting single or multiple attributes of interest. After filtering, the metadata of the selected samples can be downloaded as an Excel file. The information about each sample—“Project ID”, “Project Title ”, “Experiment ID”, “Sample ID” and “PubMed ID” (if present)—can be hyperlinked to the source database.</div>
+            <hr style="height:3px;border:none;border-top:1px solid #17a2b8;">
+                <div>
+                    <h5 class="circleh1" id="help2-3" style="margin: 10px 0 0 10px;">Map</h5>
+                    <p class="circlep">
+                        In the map page, we provide a more intuitive method. Users can directly select samples from the world map according to the location of interest but only select samples marked with the geographical location. User can select the rectangular drawing tool from the map toolbar on the left, and then draw a region to select the metagenomes of interest. The selected animal metagenomic metadata will be displayed in the data set below the map.
+                    </p>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <!--底部-->
+    <div class="foot">
+        <p>Copyright ©College of Life Sciences, Shihezi University</p>　
+    </div>
+
+</div>
+</body>
+<srcipt>
+</srcipt>
+<script src="../vuejs/axios.js"></script>
+<script src="../vuejs/vue.js"></script>
+<script src="../ant-design-vue-1.7.2/package/dist/antd.js"></script>
+<script src="../script/jquery1.11.3.min.js"></script>
+<script src="../localstyle/help.js"></script>
+<script>
+    var isShow=false
+    $(document).ready(function(){
+
+        $(".tb").click(function(){
+            if(isShow==false){
+                $(".nav").css("display","block");
+            }
+            else{
+                $(".nav").css("display","none");
+            }
+            isShow=!isShow
+        });
+    });
+</script>
+</html>

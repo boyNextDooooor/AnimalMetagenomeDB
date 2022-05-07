@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/ant-design-vue-1.7.2/package/dist/antd.min.css">
+</head>
+<body>
+<style>
+    .container{
+        height: 650px;
+    }
+    .title{
+        background-color:salmon;
+        height: 50px;
+    }
+    .title_home{
+        margin: auto;
+        padding: 5px;
+    }
+    .title_one{
+        margin: auto;
+        padding: 7px;
+    }
+    .title_two{
+        margin: auto;
+        padding: 7px;
+    }
+    .title_three{
+        margin: auto;
+        padding: 7px;
+    }
+    .title_one:hover
+    {
+        background-color:#FFA07A;
+    }
+    .title_two:hover
+    {
+        background-color:#FFA07A;
+    }
+</style>
+
+<div class="container">
+    <a-icon type="play-square" />
+    <div class="title">
+        <div class="title_home" style="float: left;margin-left: 5px ">
+            <a href="../static/pages/home.html" target="myiframe">
+                <h1><a-icon type="switcher" />Home</h1>
+            </a>
+        </div>
+        <div class="title_one" style="float: left;margin-left: 20px">
+            <a href="../static/pages/Search.html" target="myiframe"><h3>Search</h3></a>
+        </div>
+        <div class="title_two" style="float: left; margin-left: 20px">
+            <a href="../static/pages/browser.html" target="myiframe"><h3>Browse</h3></a>
+        </div>
+        <div class="title_three" style="float: left; margin-left: 20px">
+            <a href="../static/pages/sus.html" target="myiframe"><h3>Space</h3></a>
+        </div>
+    </div>
+    <div class="footer">
+        <h1 style="text-align:center">Welcome to AnimalMetagenome DB</h1>
+        <p style="color: white">The development of high-throughput sequencing stimulates a series of microbiome technologies, such as amplicon sequencing, whole genome sequencing, metagenome, metatranscriptome, which have rapidly promoted the development of the microbiome field. In recent years, the number of metagenomic data in public repositories is increasing exponentially. Here, we introduce the AnimalMetagenome DB, which contains all public animal microbiome data, divided into domestic animal and wild animal. AnimalMetagenome DB integrates microbiome sequencing data with host information, making it easier for researchers to find animal metagenomic data of interest.
+            Currently, AnimalMetagenome DB version 1.0 includes microbiome data of pig, bovine, horse, sheep and about    wild animals. These microbiome data cover    metagenomes metadata,     countries,    projects. Researchers can browse and search for animal metagenomics data of interest by selecting animal species, sample site, study type, sequencing platform, etc.</p>
+    </div>
+    <iframe src="../static/pages/home.html" frameborder="0" name="myiframe" height="100%" width="100%"></iframe>
+</div>
+</body>
+</html>

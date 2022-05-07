@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../ant-design-vue-1.7.2/package/dist/antd.min.css">
+    <link rel="stylesheet" href="../css/Browse.css">
+    <style>
+
+    </style>
+
+</head>
+<body>
+<div id="app" >
+<!--    下拉选择-->
+    <!--头部-->
+    <div class="topBox">
+        <!--标题-->
+        <div class="logo" style="white-space: nowrap;line-height: 75px;">
+            <span class="logo-span" style="font-size: 30px;margin-left: 150px;">AnimalMetagenome DB</span>
+        </div>
+        <!--菜单-->
+        <div class="butTb">
+            <img class="tb" src="../images/biao.png">
+        </div>
+
+        <div class="nav">
+            <ul>
+                <li><a href="../../homePages.html">Home</a></li>
+                <li><a href="browser.html" class="active">Browse</a></li>
+                <li><a href="Search.html">Search</a></li>
+                <li><a href="map.html">Map</a></li>
+                <li><a href="help.html" >Help</a></li>
+                <li><a href="submit.html">Submit</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div style="width: 90%;height: 40px;margin: 2% 5% 1%;background: #baccd9;">
+        <span style="display: inline-block;margin: 8px 20px;">There are <i style="color: red;font-weight: bold;">{{total}}</i> experiments,<i style="color: red;font-weight: bold;">{{sampleSite0List.length}}</i> sample sites,<i style="color: red;font-weight: bold;">{{BioProjectType.length}}</i> study types.</span>
+    </div>
+
+    <template>
+                <div class="Select-box" >
+                    <div class="box-one">
+                    <span class="Select-box-one" ><strong>Species:</strong></span>
+                    <a-select style="width: 60%;" @change="getSelectValuep(pvalue)" v-model="pvalue" allowClear="true" >
+                        <a-select-option
+                                v-for="item in options"
+                                :key="item"
+                                :label="item"
+                                :value="item"
+                                style="height: 100px"
+                        >
+                            {{item}}
+                        </a-select-option>
+                    </a-select>
+                    </div>
+
+                    <div class="box-two">
+                    <span class="Select-box-two"><strong>Sample Site:</strong></span>
+<!--                    <template>-->
+<!--&lt;!&ndash;                        <a-cascader :options="Outline" v-model="outline" change-on-select style="width: 50%" placeholder=" " @change="onOutlineChange" />&ndash;&gt;-->
+<!--                        <a-select-->
+<!--                                style="width: 60%;"-->
+<!--                                v-model="sampleSite0"-->
+<!--                                show-search-->
+<!--                                option-filter-prop="children"-->
+<!--                                :filter-option="filterOption"-->
+<!--                                @change="onChange(1)"-->
+<!--                        >-->
+<!--                            <div slot="dropdownRender" slot-scope="menu">-->
+<!--                                <div-->
+<!--                                        style="padding: 5px 12px; cursor: pointer;"-->
+<!--                                        @mousedown="e => e.preventDefault()"-->
+<!--                                        @click="DeselectSampleSite0"-->
+<!--                                >-->
+<!--                                    Deselect All-->
+<!--                                </div>-->
+<!--                                <v-nodes :vnodes="menu" />-->
+<!--                            </div>-->
+<!--                            <a-select-option-->
+<!--                                    v-for="s in sampleSite0List"-->
+<!--                                    :key="s"-->
+<!--                                    :value="s">-->
+<!--                                {{s}}-->
+<!--                            </a-select-option>-->
+<!--                        </a-select>-->
+<!--                    </template>-->
+                        <template>
+                            <a-cascader :options="sampleSite0List" v-model="sampleSiteModel"  style="width: 60%;" change-on-select placeholder=" " @change="changeSampleSite"  />
+                        </template>
+                    </div>
+
+
+<!--                    级联选择-->
+                    <div class="box-three" >
+                    <span class="Select-box-three" ><strong>Study Purpose:</strong></span>
+                    <template>
+                        <a-cascader :options="BioProjectType" v-model="a"  style="width: 60%;" change-on-select placeholder=" " @change="b"  />
+                    </template>
+                    </div>
+<!--                    <span class="unknow"><strong></strong></span>-->
+<!--                    <template>-->
+<!--                        <a-cascader :options="Outline" v-model="outline" change-on-select style="width: 260px" placeholder="Please select" @change="onOutlineChange" />-->
+<!--                    </template>-->
+                        <div class="option-button-one">
+                            <template>
+                                <a-button style="margin-left: 1%;" type="primary" @click="Reset()">
+                                    <i class="iconfont">&#xe608;</i>
+                                </a-button>
+                            </template>
+                        </div>
+                        <div class="option-button-two">
+                            <template>
+                                <a-button style="margin-left: 1%" type="primary" @click="printData()">
+                                    <i class="iconfont">&#xe7e3;</i>
+                                </a-button>
+                            </template>
+                        </div>
+                </div>
+        </template>
+
+
+    <template>
+        <a-table
+                @change="changeTab"
+                :row-class-name = rowClassName
+                style="width: 90% ;
+                /*height:600px;*/
+                margin-right: 5%;
+                margin-left: 5%;
+                 margin-top: 2%;
+
+                 /*word-break: initial;*/
+                 /*table-layout: unset;*/
+                 /*size: A4 ;*/
+
+
+"
+                :pagination = "false"
+                :columns="columns"
+                :data-source="result"
+                :loading="FAQ"
+                :row-key='record=>record.experimentAccession'
+                :scroll="{ x:true}"
+                :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+        >
+<!--            <span slot="expandedRowRender" slot-scope="record" style="margin: 0">-->
+<!--                <p style="width: 80%;margin-left: 10%;"><span style="color: skyblue">Bioproject description:</span>{{record.bioprojectDescription }}</p>-->
+<!--                <p style="width: 80%;margin-left: 10%;"><span style="color: skyblue">Bioproject type:</span>{{record.bioprojectType}}</p>-->
+<!--            </span>-->
+
+
+
+            <a slot="lianjies" slot-scope="text,record" :href="record.lianjies" target="_blank" >{{ text }}</a>
+            <a slot="lianjieb" slot-scope="text,record" :href="record.lianjieb" target="_blank" >{{ text }}</a>
+            <a slot="lianjiee" slot-scope="text,record" :href="record.lianjiee" target="_blank" >{{ text }}</a>
+            <a slot="lianjiep" slot-scope="text,record" :href="record.lianjiep" target="_blank" >{{ text }}</a>
+            <a slot="lianjienew" slot-scope="text,record" :href="record.lianjienew" target="_blank" >{{ text }}</a>
+            <span slot="customTitle">Name</span>
+            <span slot="action" slot-scope="text, record">
+
+               </span>
+        </a-table>
+    </template>
+
+    <template>
+    <div class="page-divise-box">
+        <a-pagination
+                show-quick-jumper
+                :default-current="pageNum"
+                :total="total"
+                @change="onChange"
+        />
+    </div>
+</template>
+
+<!--    尾部-->
+    <div class="foot">
+        <p>Copyright ©College of Life Sciences, Shihezi University</p>　
+    </div>
+</div>
+
+
+</body>
+<script src="../vuejs/axios.js"></script>
+<script src="../vuejs/vue.js"></script>
+<script src="../ant-design-vue-1.7.2/package/dist/antd.js"></script>
+<script src="../node_modules/xlsx/dist/xlsx.core.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="../localstyle/login.js"></script>
+<script>
+
+    var isShow=false
+    $(document).ready(function(){
+
+        $(".tb").click(function(){
+            if(isShow==false){
+                $(".nav").css("display","block");
+            }
+            else{
+                $(".nav").css("display","none");
+            }
+            isShow=!isShow
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,223 @@
+*{
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    list-style: none;
+    font-family: "微软雅黑";
+}
+body{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+a:hover{
+    background-color:rgb(76,150,223);
+}
+a:active{
+    background-color:cyan;
+}
+.active{
+    background-color: #3aa2e2;
+}
+img{
+    width: 100%;
+}
+
+
+    .topBox{
+        background-color: #3b8fc3;
+        height: 75px;
+        width: 100%;
+        /*right: 0;*/
+        /*left: 0;*/
+        /*position: fixed;*/
+        /*z-index: 100;*/
+    }
+    .logo{
+        height: 100%;
+        width: 45%;
+        float: left;
+    }
+    .logo-span{
+        white-space: nowrap;
+        font-size: 30px;
+        margin-left: 40%;
+        line-height: 75px;
+    }
+    .tb{
+        display: none;
+    }
+    .nav{
+        display: block;
+        height: 100%;
+        width: 55%;
+        float: left;
+    }
+    .nav ul{
+        height: 100%;
+        width: 100%;
+        line-height: 75px;
+    }
+    .nav li{
+        height: 100%;
+        float: left;
+        /*margin-right: 4%;*/
+        width: 9%;
+        text-align: center;
+    }
+    .nav li a{
+        color:#000000;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .content {
+        margin-top: 1%;padding:0;
+        height: 900px;
+        width: 100%;
+    }
+    #myiframe{
+        width: 100%;
+        height: 100%;
+    }
+    .foot{
+        width: 100%;
+        height: 75px;
+        background-color: #9e9e9e;
+    }
+    .foot p{
+        text-align: center;
+        position: relative;
+        top: 50%;
+    }
+
+
+@media only screen and (max-width:1440px ){
+    .logo-span{
+        margin-left: 150px;
+    }
+    .logo{
+        width: 50%;
+    }
+    .nav{
+        width: 50%;
+    }
+    .nav li{
+        width: 12%;
+    }
+}
+
+@media only screen and (max-width:1024px ){
+    .logo-span{
+        margin-left: 85px;
+    }
+    .logo{
+        width: 50%;
+    }
+    .nav{
+        width: 50%;
+        display: block;
+    }
+    .nav li{
+        width: 14%;
+    }
+    .container {
+        height: 900px;
+    }
+}
+
+@media only screen and (max-width:768px ){
+    .logo-span {
+        margin-left: 20px;
+        font-size: 25px;
+    }
+    .nav li {
+        width: 16%;
+    }
+    .container {
+        height: 1000px;
+    }
+    .row{
+        width: 91%;
+    }
+}
+
+@media only screen and (max-width:425px ){
+    .topBox{
+        background-color: #3b8fc3;
+        height: 75px;
+        width: 100%;
+        position: fixed;
+        z-index: 100;
+        top: 0;
+    }
+    .logo{
+        height: 100%;
+        width: 65%;
+        float: left;
+    }
+    .logo-span{
+        white-space: nowrap;
+        font-size: 20px;
+        margin-left: 12px;
+        line-height: 75px;
+    }
+    .butTb{
+        height: 100%;
+        width: 35%;
+        float: left;
+    }
+    .tb{
+        display: block;
+        width: 35px;
+        margin-left: 90px;
+        margin-top: 20px;
+    }
+    .nav{
+        display: none;
+        height: 22%;
+        width: 100%;
+        float: none;
+        position: fixed;
+        top: 75px;
+        background-color: beige;
+    }
+    .nav ul{
+        height: 100%;
+        width: 100%;
+        line-height: 25px;
+    }
+    .nav li{
+        height: 16.66%;
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+    .nav li a{
+        color:#000000;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .container{
+        height: 1600px;
+        margin-top: 90px;
+    }
+    .foot{
+        width: 100%;
+        margin-top: 54px;
+        background-color: #9e9e9e;
+    }
+    .foot p{
+        text-align: center;
+        position: relative;
+        top: 40%;
+        font-size: 13px;
+    }
+    .content{
+        margin-top: 75px;
+    }
+}
